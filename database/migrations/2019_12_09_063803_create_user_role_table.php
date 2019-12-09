@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStreetTipTable extends Migration
+class CreateUserRoleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateStreetTipTable extends Migration
      */
     public function up()
     {
-        Schema::create('street_tip', function (Blueprint $table) {
+        Schema::create('user_role', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('street_tip_name');
-            $table->boolean('is_active');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('role_id')->unsigned();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('role_id')->references('id')->on('role');
+
         });
     }
 
@@ -28,6 +31,6 @@ class CreateStreetTipTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('street_tip');
+        Schema::dropIfExists('user_role');
     }
 }

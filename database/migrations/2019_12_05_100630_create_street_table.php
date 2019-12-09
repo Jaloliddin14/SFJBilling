@@ -17,6 +17,7 @@ class CreateStreetTable extends Migration
             $table->bigIncrements('id');
             $table->string('street_name');
             $table->bigInteger('street_tip_id')->unsigned();
+            $table->boolean('is_active');
             $table->foreign('street_tip_id')->references('id')->on('street_tip');
             $table->timestamps();
         });
