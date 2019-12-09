@@ -23,6 +23,7 @@ class CreatePereraschetTable extends Migration
             $table->decimal('oplata',15,2);
             $table->text('oplata_note');
             $table->bigInteger('user_id')->unsigned();
+            $table->date('period');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('abonent_id')->references('id')->on('abonent');
 

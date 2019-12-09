@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOplatiTable extends Migration
+class CreateServiceNachTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,19 @@ class CreateOplatiTable extends Migration
      */
     public function up()
     {
-        Schema::create('oplati', function (Blueprint $table) {
+        Schema::create('service_nach', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('abonent_id')->unsigned();
-            $table->dateTime('doc_sana');
+            $table->bigInteger('service_id')->unsigned();
+            $table->date('sana_begin');
+            $table->date('sana_end');
+            $table->decimal('cena',15,2);
+            $table->date('doc_sana');
             $table->string('doc_nomer');
-            $table->dateTime('sana_add');
-            $table->decimal('oplata',15,2);
-            $table->bigInteger('oplata_id')->unsigned();
+            $table->boolean('is_active');
             $table->bigInteger('user_id')->unsigned();
             $table->date('period');
-            $table->foreign('oplata_id')->references('id')->on('oplata_tip');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('abonent_id')->references('id')->on('abonent');
             $table->timestamps();
-
-
-
         });
     }
 
@@ -40,6 +36,6 @@ class CreateOplatiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('oplati');
+        Schema::dropIfExists('service_nach');
     }
 }
