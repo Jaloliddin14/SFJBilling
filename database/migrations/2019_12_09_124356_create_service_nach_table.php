@@ -25,6 +25,9 @@ class CreateServiceNachTable extends Migration
             $table->boolean('is_active');
             $table->bigInteger('user_id')->unsigned();
             $table->date('period');
+            $table->foreign('service_id')->references('id')->on('services');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('abonent_id')->references('id')->on('abonent');
             $table->timestamps();
         });
     }
