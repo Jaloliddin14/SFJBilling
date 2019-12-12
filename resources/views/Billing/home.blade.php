@@ -3,6 +3,7 @@
 @section('content')
     <div class="container-fluid ">
         <div class="container-fluid ">
+            <hr class="mb-4" style="border:1px solid red" >
             <form class="needs-validation" novalidate="">
                 <div class="row">
                     <div class="col-md-3 mb-3">
@@ -38,9 +39,10 @@
             </form>
         </div>
 
-        <hr class="mb-4" style="border:1px solid red" >
+
 
         <div class="container-fluid">
+            <hr class="mb-4" style="border:1px solid red" >
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover table-sm">
                     <thead>
