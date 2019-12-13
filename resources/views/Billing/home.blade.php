@@ -2,8 +2,13 @@
 
 @section('content')
     <div class="container-fluid ">
-        <div class="container-fluid ">
-            <hr class="mb-4" style="border:1px solid red" >
+
+        <div class="card ">
+            <div class="card-header">
+                Поиск
+            </div>
+            <div class="card-body">
+
             <form class="needs-validation" novalidate="">
                 <div class="row">
                     <div class="col-md-3 mb-3">
@@ -37,12 +42,17 @@
                 </div>
                 <button class="btn btn-success btn-lg btn-block" type="submit">Поиск</button>
             </form>
-        </div>
+            </div>
+
+            <hr class="mb-4" >
 
 
+        <div class="card">
+            <div class="card-header">
+                Результаты выборки
+            </div>
+            <div class="card-body">
 
-        <div class="container-fluid">
-            <hr class="mb-4" style="border:1px solid red" >
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover table-sm">
                     <thead>
@@ -172,5 +182,7 @@
             </div>
         </div>
 
-    </div>
+
+
+        </div>
 @endsection
