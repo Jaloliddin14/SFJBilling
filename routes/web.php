@@ -18,3 +18,7 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/createabonent','AbonentController@create');
+
+Route::post('/createabonent','AbonentController@store');
