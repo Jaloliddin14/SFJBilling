@@ -8,6 +8,7 @@ use App\User;
 class Mabonent extends Model
 {
     protected $table = 'abonent';
+    protected $guarded =['id'];
 
     function user()
     {

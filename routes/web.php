@@ -17,8 +17,15 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+//Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/createabonent','AbonentController@create');
 
 Route::post('/createabonent','AbonentController@store');
+
+//Route::get('/abonentsearch','AbonentController@index')->name('home');
+
+Route::get('/abonentsearch','AbonentController@index');
+
+Route::get('/abonentsearch/{slug?}', 'AbonentController@show');
+

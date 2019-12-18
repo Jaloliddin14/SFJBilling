@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\AbonentFormRequest;
+use App\Mabonent;
 
 class AbonentController extends Controller
 {
@@ -14,7 +15,8 @@ class AbonentController extends Controller
      */
     public function index()
     {
-        //
+        $abonents = Mabonent::all();
+        return view('Billing.abonentview',compact('abonents'));
     }
 
     /**
@@ -30,29 +32,56 @@ class AbonentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AbonentFormRequest $request)
     {
-        return $request->all();
+        $slug = uniqid();
+        $mabonent = new Mabonent(array(
+            'pass_fio' => $request->get('pass_fio'),
+            'pass_seriya' => $request->get('pass_seriya'),
+            'pass_nomer' => $request->get('pass_nomer'),
+            'pass_iib' => $request->get('pass_iib'),
+            'pass_sana_birth' => $request->get('pass_sana_birth'),
+            'pass_sana_get' => $request->get('pass_sana_get'),
+            'pass_sana_exp' => $request->get('pass_sana_exp'),
+            'add_street_id' => $request->get('add_street_id'),
+            'add_dom' => $request->get('add_dom'),
+            'add_korpus' => $request->get('add_korpus'),
+            'add_podyezd' => $request->get('add_podyezd'),
+            'add_kvartira' => $request->get('add_kvartira'),
+            'sana_add' => $request->get('dogovor_sana'),
+            'dogovor_sana' => $request->get('dogovor_sana'),
+            'dogovor_nomer' => $request->get('dogovor_nomer'),
+            'is_active' => 1,
+            'phone' => $request->get('phone'),
+            'email' => $request->get('email'),
+            'slug' => $slug
+        ));
+
+        $mabonent->save();
+
+        return redirect('/createabonent')->with('status','Your ticket has been created! Its unique id is: '.$slug);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $abonents = Mabonent::whereSlug($slug)->first();
+        return view('Billing.abonentshow',compact('abonents'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -63,8 +92,8 @@ class AbonentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -75,7 +104,7 @@ class AbonentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

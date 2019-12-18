@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="container col-md-8 col-md-offset-2">
         <div class="card mt-5">
@@ -11,6 +12,12 @@
                     @foreach ($errors->all() as $error)
                         <p class="alert alert-danger">{{ $error }}</p>
                     @endforeach
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <fieldset>
 
@@ -75,10 +82,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="add_korpus" class="col-lg-10 control-label">Подъезд</label>
+                            <label for="add_podyezd" class="col-lg-10 control-label">Подъезд</label>
                             <div class="col-lg-auto">
-                                <input type="text" class="form-control" id="add_korpus" placeholder="Номер подъезда"
-                                       name="add_korpus">
+                                <input type="text" class="form-control" id="add_podyezd" placeholder="Номер подъезда"
+                                       name="add_podyezd">
                             </div>
                         </div>
                         <div class="form-group">
