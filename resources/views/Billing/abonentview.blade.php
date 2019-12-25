@@ -1,40 +1,81 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 
 @section('content')
 
-    <div class="container col-md-8 col-md-offset-2 mt-5">
-        <div class="card">
-            <div class="card-header ">
-                <h5 class="float-left">Abonents</h5>
-                <div class="clearfix"></div>
+    <div class="container-fluid ">
+
+        <div class="card ">
+            <div class="card-header">
+                Поиск
             </div>
-            <div class="card-body mt-2">
-                @if ($abonents->isEmpty())
-                    <p> There is no ticket.</p>
-                @else
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($abonents as $abonent)
-                            <tr>
-                                <td>{{ $abonent->id }} </td>
-                                <td>
-                                    <a href="{{ action('AbonentController@show', $abonent->slug) }}">{{ $abonent->pass_fio }}</a>
-                                </td>
-                                <td>{{ $abonent->is_active ? 'Active' : 'Not Active' }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                @endif
+            <div class="card-body">
+
+                <form method="post" action="/checkdemo" class="needs-validation">
+
+                    {{ csrf_field() }}
+
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="abonent_id">Счет абонента </label>
+                                <input type="text" class="form-control" id="abonent_id" name="abonent_id">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="pass_fio">Фамилия Имя Отчество </label>
+                                <input type="text" class="form-control" id="pass_fio" name="pass_fio">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="phone">Телефон</label>
+                                <input type="text" class="form-control" id="phone" name="phone">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="email">Электронная почта</label>
+                                <input type="text" class="form-control" id="email" name="email">
+                            </div>
+                        </div>
+                        <button class="btn btn-success btn-lg btn-block" type="submit">Поиск</button>
+                    </fieldset>
+                </form>
             </div>
-        </div>
-    </div>
+
+            <hr class="mb-4">
+
+
+            <div class="card">
+                <div class="card-header">
+                    Результаты выборки
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        @if ($abonents->isEmpty())
+                            <p> There is no ticket.</p>
+                        @else
+
+                            <table class="table table-striped table-bordered table-hover table-sm">
+                                <thead>
+                                <tr class="bg-primary">
+                                    <th class="th-sm">Счет абонента</th>
+                                    <th class="th-sm">Фамилия Имя Отчество</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($abonents as $abonent)
+                                    <tr>
+                                        <td>{{ $abonent->id }} </td>
+                                        <td>
+                                            <a href="{{ action('AbonentController@show', $abonent->slug) }}">{{ $abonent->pass_fio }}</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </div>
+
+
+            </div>
+
 
 @endsection

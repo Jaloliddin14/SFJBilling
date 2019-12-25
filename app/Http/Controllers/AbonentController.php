@@ -13,11 +13,19 @@ class AbonentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index(Request $request)
     {
         $abonents = Mabonent::all();
-        return view('Billing.abonentview',compact('abonents'));
+//        dd($request);
+        return view('Billing.abonentview', compact('abonents'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -62,7 +70,7 @@ class AbonentController extends Controller
 
         $mabonent->save();
 
-        return redirect('/createabonent')->with('status','Your ticket has been created! Its unique id is: '.$slug);
+        return redirect('/createabonent')->with('status', 'Your ticket has been created! Its unique id is: ' . $slug);
     }
 
     /**
@@ -74,7 +82,7 @@ class AbonentController extends Controller
     public function show($slug)
     {
         $abonents = Mabonent::whereSlug($slug)->first();
-        return view('Billing.abonentshow',compact('abonents'));
+        return view('Billing.abonentshow', compact('abonents'));
 
     }
 
@@ -111,4 +119,25 @@ class AbonentController extends Controller
     {
         //
     }
+
+    public function checkdemo(Request $request)
+    {
+
+        //dd($request);
+        //$abonents = Mabonent::all()->where('pass_fio','like',$request->get('pass_fio'));
+        //if ($request->get('email')=='')  $abonents=$request->get('pass_fio');
+        //else   $abonents=$request->get('email');
+        //$abonents=$request->get('email');
+
+
+        $abonents = Mabonent::all();
+        if ($request->get('abonent_id')!='')  $abonents=$abonents->where('id',$request->get('abonent_id'));
+        if ($request->get('pass_fio')!='')  $abonents=$abonents->where('pass_fio','like',$request->get('pass_fio'));
+        //if ($request->get('pass_fio')!='')  $abonents=$abonents->where('pass_fio','like',"%%");
+        if ($request->get('phone')!='')  $abonents=$abonents->where('phone','like',$request->get('phone'));
+        if ($request->get('email')!='')  $abonents=$abonents->where('email','like',$request->get('email'));
+        //dd($abonents);
+        return view('Billing.test', compact('abonents'));
+    }
+
 }
