@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\AbonentFormRequest;
 use App\Mabonent;
@@ -21,8 +22,20 @@ class AbonentController extends Controller
 
     public function index(Request $request)
     {
-        $abonents = Mabonent::all();
-//        dd($request);
+        $query = Mabonent::query();
+
+        if ($request->get('abonent_id') != '') $query = $query->where('id', $request->get('abonent_id'));
+        if ($request->get('pass_fio') != '') $query = $query->where('pass_fio', 'like', '%' . $request->get('pass_fio') . '%');
+        if ($request->get('phone') != '') $query = $query->where('phone', 'like', '%' . $request->get('phone') . '%');
+        if ($request->get('email') != '') $query = $query->where('email', 'like', '%' . $request->get('email') . '%');
+
+        if ($request->get('abonent_id') == '' &&
+            $request->get('pass_fio') == '' &&
+            $request->get('phone') == '' &&
+            $request->get('email') == '') $query = $query->where('id', '<', '0');
+
+        $abonents = $query->get();
+
         return view('Billing.abonentview', compact('abonents'));
     }
 
@@ -123,20 +136,20 @@ class AbonentController extends Controller
     public function checkdemo(Request $request)
     {
 
-        //dd($request);
-        //$abonents = Mabonent::all()->where('pass_fio','like',$request->get('pass_fio'));
-        //if ($request->get('email')=='')  $abonents=$request->get('pass_fio');
-        //else   $abonents=$request->get('email');
-        //$abonents=$request->get('email');
+        $query = Mabonent::query();
 
+        if ($request->get('abonent_id') != '') $query = $query->where('id', $request->get('abonent_id'));
+        if ($request->get('pass_fio') != '') $query = $query->where('pass_fio', 'like', '%' . $request->get('pass_fio') . '%');
+        if ($request->get('phone') != '') $query = $query->where('phone', 'like', '%' . $request->get('phone') . '%');
+        if ($request->get('email') != '') $query = $query->where('email', 'like', '%' . $request->get('email') . '%');
 
-        $abonents = Mabonent::all();
-        if ($request->get('abonent_id')!='')  $abonents=$abonents->where('id',$request->get('abonent_id'));
-        if ($request->get('pass_fio')!='')  $abonents=$abonents->where('pass_fio','like',$request->get('pass_fio'));
-        //if ($request->get('pass_fio')!='')  $abonents=$abonents->where('pass_fio','like',"%%");
-        if ($request->get('phone')!='')  $abonents=$abonents->where('phone','like',$request->get('phone'));
-        if ($request->get('email')!='')  $abonents=$abonents->where('email','like',$request->get('email'));
-        //dd($abonents);
+        if ($request->get('abonent_id') == '' &&
+            $request->get('pass_fio') == '' &&
+            $request->get('phone') == '' &&
+            $request->get('email') == '') $query = $query->where('id', '<', '0');
+
+        $abonents = $query->get();
+
         return view('Billing.test', compact('abonents'));
     }
 

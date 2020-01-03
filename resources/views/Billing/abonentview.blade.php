@@ -10,7 +10,7 @@
             </div>
             <div class="card-body">
 
-                <form method="post" action="/checkdemo" class="needs-validation">
+                <form method="post"  class="needs-validation">
 
                     {{ csrf_field() }}
 
@@ -33,7 +33,7 @@
                                 <input type="text" class="form-control" id="email" name="email">
                             </div>
                         </div>
-                        <button class="btn btn-success btn-lg btn-block" type="submit">Поиск</button>
+                        <button {{action('AbonentController@index')}} class="btn btn-success btn-lg btn-block" type="submit">Поиск</button>
                     </fieldset>
                 </form>
             </div>
@@ -49,7 +49,7 @@
 
                     <div class="table-responsive">
                         @if ($abonents->isEmpty())
-                            <p> There is no ticket.</p>
+
                         @else
 
                             <table class="table table-striped table-bordered table-hover table-sm">

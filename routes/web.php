@@ -28,5 +28,5 @@ Route::post('/','AbonentController@index');
 
 Route::get('/abonentsearch/{slug?}', 'AbonentController@show');
 
-Route::post('/checkdemo','AbonentController@checkdemo');
+Route::post('/','AbonentController@index');
 
