@@ -10,7 +10,6 @@ use App\Oplata;
 use App\TipOplat;
 
 
-
 class OplataController extends Controller
 {
 
@@ -64,8 +63,12 @@ class OplataController extends Controller
             'user_id' => '1',
             'period' => now()
         ));
-        $oplata -> save();
-        return redirect('/');
+        $oplata->save();
+        $abonent_id = $request->get('ab_id');
+
+        $abonents = Mabonent::whereId($abonent_id)->first();
+        return view('Billing.abonentshow', compact('abonents'));
+
     }
 
     /**

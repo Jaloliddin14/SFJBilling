@@ -66,22 +66,34 @@
                         <p><strong>Последняя оплата</strong>: {{ $abonents-> pass_sana_get}} </p>
                     </div>
                 </div>
-                <form method="post" action="/addoplata">
+                <div class="row">
 
-                    <a href="#" class="btn btn-info">Добавить услугу</a>
-
-                    <form method="post" action="/addoplata">
-                        <input type="hidden" name="ab_id" value="{{$abonents->id}}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="submit" class="btn btn-primary" value="Прием оплаты">
-                    </form>
-
-                    <a href="#" class="btn btn-info">Изменить данные</a>
-
-                </form>
+                    <div class="col-sm-2">
+                        <form method="post" action="/addoplata">
+                            <input type="hidden" name="ab_id" value="{{$abonents->id}}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="submit" class="btn btn-primary" value="Установка услуги">
+                        </form>
+                    </div>
+                    <div class="col-sm-2">
+                        <form method="post" action="/addoplata">
+                            <input type="hidden" name="ab_id" value="{{$abonents->id}}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="submit" class="btn btn-primary" value="Прием оплаты">
+                        </form>
+                    </div>
+                    <div class="col-sm-2">
+                        <form method="post" action="/addoplata">
+                            <input type="hidden" name="ab_id" value="{{$abonents->id}}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="submit" class="btn btn-primary" value="Изменить">
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 
     <div class="container col-md-8 col-md-offset-2 mt-5">
         <div id="accordion">
@@ -98,7 +110,8 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                        squid.
                         3
                         wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
                         laborum
@@ -107,7 +120,8 @@
                         assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
                         nesciunt
                         sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
+                        accusamus
                         labore sustainable VHS.
                     </div>
                 </div>
@@ -123,7 +137,8 @@
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                        squid.
                         3
                         wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
                         laborum
@@ -132,7 +147,8 @@
                         assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
                         nesciunt
                         sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
+                        accusamus
                         labore sustainable VHS.
                     </div>
                 </div>
@@ -148,7 +164,8 @@
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                        squid.
                         3
                         wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
                         laborum
@@ -157,7 +174,8 @@
                         assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
                         nesciunt
                         sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
+                        accusamus
                         labore sustainable VHS.
                     </div>
                 </div>
