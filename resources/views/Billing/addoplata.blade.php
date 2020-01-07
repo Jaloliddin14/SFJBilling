@@ -8,7 +8,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body mt-2">
-                <form method="post">
+                <form method="post" action="/addoplatacreate">
                     @foreach ($errors->all() as $error)
                         <p class="alert alert-danger">{{ $error }}</p>
                     @endforeach
@@ -19,6 +19,7 @@
                     @endif
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="ab_id" value="{{$abonents->id}}">
                     <fieldset>
 
                         <div class="row">
@@ -45,14 +46,14 @@
                             <div class="col-lg-auto">
                                 <select class="form-control" name="item_id">
                                     @foreach($tip_oplat as $item)
-                                        <option value="{{$item->item_id}}">{{$item->oplata_tip_name}}</option>
+                                        <option value="{{$item->id}}">{{$item->oplata_tip_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="doc_nomer" class="col-lg-10 control-label">Номер договора</label>
+                            <label for="doc_nomer" class="col-lg-10 control-label">Номер документа</label>
                             <div class="col-lg-auto">
                                 <input type="text" class="form-control" id="doc_nomer" placeholder="Номер договора"
                                        name="doc_nomer">
@@ -60,7 +61,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="doc_sana" class="col-lg-10 control-label">Дата договора</label>
+                            <label for="doc_sana" class="col-lg-10 control-label">Дата документа</label>
                             <div class="col-lg-auto">
                                 <input type="date" class="form-control" id="doc_sana" placeholder="Дата оплаты"
                                        name="doc_sana">

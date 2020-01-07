@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\AbonentFormRequest;
 use App\Mabonent;
+use App\Oplata;
 
 class AbonentController extends Controller
 {

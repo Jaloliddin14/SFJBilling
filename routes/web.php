@@ -32,4 +32,6 @@ Route::post('/','AbonentController@index');
 
 
 Route::get('/addoplata/{id?}','OplataController@show');
+Route::post('/addoplata','OplataController@index');
+Route::post('/addoplatacreate','OplataController@store');
 

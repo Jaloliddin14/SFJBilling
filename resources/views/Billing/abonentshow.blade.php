@@ -67,10 +67,15 @@
                     </div>
                 </div>
                 <form method="post" action="/addoplata">
-                    -
+
                     <a href="#" class="btn btn-info">Добавить услугу</a>
-                    <a href="{{ action('OplataController@show', $abonents-> id) }}" class="btn btn-info">Прием
-                        оплаты</a>
+
+                    <form method="post" action="/addoplata">
+                        <input type="hidden" name="ab_id" value="{{$abonents->id}}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-primary" value="Прием оплаты">
+                    </form>
+
                     <a href="#" class="btn btn-info">Изменить данные</a>
 
                 </form>
