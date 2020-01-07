@@ -83,7 +83,7 @@ class AbonentController extends Controller
 
         $mabonent->save();
 
-        return redirect('/createabonent')->with('status', 'Your ticket has been created! Its unique id is: ' . $slug);
+        return redirect('/')->with('status', 'Your ticket has been created! Its unique id is: ' . $slug);
     }
 
     /**

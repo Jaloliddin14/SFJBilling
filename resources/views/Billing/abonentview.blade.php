@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container-fluid ">
+    <div class="container col-md-8 col-md-offset-2 mt-5">
 
         <div class="card ">
             <div class="card-header">
@@ -10,7 +10,7 @@
             </div>
             <div class="card-body">
 
-                <form method="post"  class="needs-validation">
+                <form method="post" class="needs-validation">
 
                     {{ csrf_field() }}
 
@@ -33,49 +33,53 @@
                                 <input type="text" class="form-control" id="email" name="email">
                             </div>
                         </div>
-                        <button {{action('AbonentController@index')}} class="btn btn-success btn-lg btn-block" type="submit">Поиск</button>
+                        <button {{action('AbonentController@index')}} class="btn btn-success btn-lg btn-block"
+                                type="submit">Поиск
+                        </button>
                     </fieldset>
                 </form>
             </div>
+        </div>
 
-            <hr class="mb-4">
-
-
-            <div class="card">
-                <div class="card-header">
-                    Результаты выборки
-                </div>
-                <div class="card-body">
-
-                    <div class="table-responsive">
-                        @if ($abonents->isEmpty())
-
-                        @else
-
-                            <table class="table table-striped table-bordered table-hover table-sm">
-                                <thead>
-                                <tr class="bg-primary">
-                                    <th class="th-sm">Счет абонента</th>
-                                    <th class="th-sm">Фамилия Имя Отчество</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($abonents as $abonent)
-                                    <tr>
-                                        <td>{{ $abonent->id }} </td>
-                                        <td>
-                                            <a href="{{ action('AbonentController@show', $abonent->slug) }}">{{ $abonent->pass_fio }}</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        @endif
-                    </div>
-                </div>
+    <hr class="mb-4">
 
 
+    <div class="card">
+        <div class="card-header">
+            Результаты выборки
+        </div>
+        <div class="card-body">
+
+            <div class="table-responsive">
+                @if ($abonents->isEmpty())
+
+                @else
+
+                    <table class="table table-striped table-bordered table-hover table-sm">
+                        <thead>
+                        <tr class="bg-primary">
+                            <th class="th-sm">Счет абонента</th>
+                            <th class="th-sm">Фамилия Имя Отчество</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($abonents as $abonent)
+                            <tr>
+                                <td>{{ $abonent->id }} </td>
+                                <td>
+                                    <a href="{{ action('AbonentController@show', $abonent->slug) }}">{{ $abonent->pass_fio }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                @endif
             </div>
+        </div>
+
+    </div>
+
+    </div>
 
 
 @endsection

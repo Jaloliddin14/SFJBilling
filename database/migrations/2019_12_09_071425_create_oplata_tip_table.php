@@ -16,6 +16,7 @@ class CreateOplataTipTable extends Migration
         Schema::create('oplata_tip', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('oplata_tip_name');
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }

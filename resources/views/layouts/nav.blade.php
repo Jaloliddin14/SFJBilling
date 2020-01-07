@@ -14,7 +14,8 @@
                 <a class="nav-link" href="/">Поиск</a>
                 <a class="nav-link" href="/createabonent">Новый абонент</a>
                 <a class="nav-link" href="/">Временный</a>
-                <a class="nav-link" href="/">Временный</a>
+                <a class="nav-link" href="/">Отчеты</a>
+                <a class="nav-link" href="/">Настройки</a>
             </ul>
 
             <!-- Right Side Of Navbar -->

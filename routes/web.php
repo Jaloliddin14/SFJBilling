@@ -22,11 +22,14 @@ Route::get('/','AbonentController@index')->name('home');
 
 Route::get('/createabonent','AbonentController@create');
 
-Route::post('/','AbonentController@store');
+Route::post('/createabonent','AbonentController@store');
 
 Route::post('/','AbonentController@index');
 
 Route::get('/abonentsearch/{slug?}', 'AbonentController@show');
 
 Route::post('/','AbonentController@index');
+
+
+Route::get('/addoplata/{id?}','OplataController@show');
 
