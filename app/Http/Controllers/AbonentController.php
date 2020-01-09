@@ -96,7 +96,16 @@ class AbonentController extends Controller
     public function show($slug)
     {
         $abonents = Mabonent::whereSlug($slug)->first();
-        return view('Billing.abonentshow', compact('abonents'));
+        $id = $abonents->id;
+//        $oplati = DB::table('oplati')->where('abonent_id',$id)->orderByDesc('sana_add')->get();
+        $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
+        join('users', 'user_id', 'users.id')->
+        select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
+        where('abonent_id', $id)->orderByDesc('sana_add')->get();
+
+//        ddd($oplati);
+
+        return view('Billing.abonentshow', compact('abonents', 'oplati'));
 
     }
 
@@ -106,9 +115,14 @@ class AbonentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+//        ddd($request);
+
+        $abonent_id = $request->get('ab_id');
+        $abonents = Mabonent::whereId($abonent_id)->first();
+        return view('Billing.abonentedit', compact('abonents'));
+
     }
 
     /**
@@ -118,9 +132,42 @@ class AbonentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+        //ddd($request);
+        $abonent_id = $request->get('ab_id');
+        $ab = Mabonent::whereId($abonent_id)->first();
+        //ddd($ab);
+        $ab->pass_fio = $request->get('pass_fio');
+        $ab->pass_seriya = $request->get('pass_seriya');
+        $ab->pass_nomer = $request->get('pass_nomer');
+        $ab->pass_iib = $request->get('pass_iib');
+        $ab->pass_sana_birth = $request->get('pass_sana_birth');
+        $ab->pass_sana_get = $request->get('pass_sana_get');
+        $ab->pass_sana_exp = $request->get('pass_sana_exp');
+        $ab->add_street_id = $request->get('add_street_id');
+        $ab->add_dom = $request->get('add_dom');
+        $ab->add_korpus = $request->get('add_korpus');
+        $ab->add_podyezd = $request->get('add_podyezd');
+        $ab->add_kvartira = $request->get('add_kvartira');
+        $ab->sana_add = $request->get('dogovor_sana');
+        $ab->dogovor_sana = $request->get('dogovor_sana');
+        $ab->dogovor_nomer = $request->get('dogovor_nomer');
+        $ab->phone = $request->get('phone');
+        $ab->email = $request->get('email');
+        $ab->save();
+
+        $abonents = Mabonent::whereId($abonent_id)->first();
+        $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
+        join('users', 'user_id', 'users.id')->
+        select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
+        where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
+
+        //ddd($oplati);
+        return view('Billing.abonentshow', compact('abonents', 'oplati'));
+
+
     }
 
     /**

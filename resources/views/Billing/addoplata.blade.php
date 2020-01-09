@@ -55,7 +55,7 @@
                         <div class="form-group">
                             <label for="doc_nomer" class="col-lg-10 control-label">Номер документа</label>
                             <div class="col-lg-auto">
-                                <input type="text" class="form-control" id="doc_nomer" placeholder="Номер договора"
+                                <input type="text" class="form-control" id="doc_nomer" placeholder="Номер документа"
                                        name="doc_nomer">
                             </div>
                         </div>
@@ -63,15 +63,15 @@
                         <div class="form-group">
                             <label for="doc_sana" class="col-lg-10 control-label">Дата документа</label>
                             <div class="col-lg-auto">
-                                <input type="date" class="form-control" id="doc_sana" placeholder="Дата оплаты"
-                                       name="doc_sana">
+                                <input type="date" class="form-control" id="doc_sana" placeholder="Дата документа"
+                                       name="doc_sana" value="<?php echo date('Y-m-d');?>">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-lg-10 col-lg-offset-2">
-                                <button class="btn btn-default">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <a href="javascript:history.back()" class="btn btn-danger">Cancel</a>
+                                <button type="submit" class="btn btn-success">Submit</button>
                             </div>
                         </div>
                     </fieldset>

@@ -41,45 +41,48 @@
             </div>
         </div>
 
-    <hr class="mb-4">
+        <hr class="mb-4">
 
 
-    <div class="card">
-        <div class="card-header">
-            Результаты выборки
-        </div>
-        <div class="card-body">
+        <div class="card">
+            <div class="card-header">
+                Результаты выборки
+            </div>
+            <div class="card-body">
 
-            <div class="table-responsive">
-                @if ($abonents->isEmpty())
+                <div class="table-responsive">
 
-                @else
-
-                    <table class="table table-striped table-bordered table-hover table-sm">
-                        <thead>
-                        <tr class="bg-primary">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                        <tr>
                             <th class="th-sm">Счет абонента</th>
                             <th class="th-sm">Фамилия Имя Отчество</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($abonents as $abonent)
-                            <tr>
-                                <td>{{ $abonent->id }} </td>
-                                <td>
-                                    <a href="{{ action('AbonentController@show', $abonent->slug) }}">{{ $abonent->pass_fio }}</a>
-                                </td>
-                            </tr>
-                        @endforeach
+                        @if ($abonents->isEmpty())
+
+                        @else
+
+                            @foreach($abonents as $abonent)
+                                <tr>
+                                    <td>{{ $abonent->id }} </td>
+                                    <td>
+                                        <a href="{{ action('AbonentController@show', $abonent->slug) }}">{{ $abonent->pass_fio }}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
-                @endif
+
+                </div>
             </div>
+
         </div>
 
     </div>
 
-    </div>
 
 
 @endsection

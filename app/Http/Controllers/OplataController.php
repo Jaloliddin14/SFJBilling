@@ -60,14 +60,20 @@ class OplataController extends Controller
             'sana_add' => now(),
             'oplata' => $request->get('pul'),
             'oplata_id' => $request->get('item_id'),
-            'user_id' => '1',
+            'user_id' => \Auth::id(),
             'period' => now()
         ));
         $oplata->save();
         $abonent_id = $request->get('ab_id');
 
         $abonents = Mabonent::whereId($abonent_id)->first();
-        return view('Billing.abonentshow', compact('abonents'));
+        $oplati = DB::table('oplati')->join('oplata_tip','oplata_id','oplata_tip.id')->
+        join('users', 'user_id', 'users.id')->
+        select('oplati.*','oplata_tip.oplata_tip_name','users.name')->
+        where('abonent_id',$abonent_id)->orderByDesc('sana_add')->get();
+
+        //ddd($oplati);
+        return view('Billing.abonentshow', compact('abonents','oplati'));
 
     }
 
@@ -82,8 +88,6 @@ class OplataController extends Controller
 
         $abonents = Mabonent::whereId($id)->first();
         $tip_oplat = TipOplat::all(['id', 'oplata_tip_name']);
-        //dd($abonent_id);
-        //dd($abonent_id);
         return view('Billing.addoplata', compact('abonents', 'tip_oplat'));
 
     }

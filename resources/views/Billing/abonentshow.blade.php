@@ -83,10 +83,10 @@
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form method="post" action="/addoplata">
+                        <form method="post" action="/editabonent">
                             <input type="hidden" name="ab_id" value="{{$abonents->id}}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="submit" class="btn btn-primary" value="Изменить">
+                            <input type="submit" class="btn btn-primary" value="Редактировать абонента">
                         </form>
                     </div>
                 </div>
@@ -137,19 +137,41 @@
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                        squid.
-                        3
-                        wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-                        laborum
-                        eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
-                        nulla
-                        assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                        nesciunt
-                        sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                        accusamus
-                        labore sustainable VHS.
+                        <div class="table-responsive">
+
+                            <table class="table table-hover">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th class="th-sm">Номер</th>
+                                    <th class="th-sm">Номер документа</th>
+                                    <th class="th-sm">Дата документа</th>
+                                    <th class="th-sm">Дата ввода</th>
+                                    <th class="th-sm">Сумма</th>
+                                    <th class="th-sm">Тип оплаты</th>
+                                    <th class="th-sm">Пользователь</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if ($oplati->isEmpty())
+
+                                @else
+
+                                    @foreach($oplati as $opl)
+                                        <tr>
+                                            <td>{{ $opl->id }} </td>
+                                            <td>{{ $opl->doc_nomer }} </td>
+                                            <td>{{ Carbon\Carbon::parse($opl->doc_sana)->format('d.m.Y') }} </td>
+                                            <td>{{ Carbon\Carbon::parse($opl->sana_add)->format('d.m.Y H:i:s') }} </td>
+                                            <th>{{ $opl->oplata }} </th>
+                                            <td>{{ $opl->oplata_tip_name }} </td>
+                                            <td>{{ $opl->name }} </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
             </div>
