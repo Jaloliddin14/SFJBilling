@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Streets;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\AbonentFormRequest;
@@ -48,7 +49,9 @@ class AbonentController extends Controller
      */
     public function create()
     {
-        return view('Billing.createabonent');
+        $streetid = DB::table('street')->select('id', 'street_name')->where('is_active', '1')
+            ->orderBy('street_name')->get();
+        return view('Billing.createabonent', compact('streetid'));
     }
 
     /**

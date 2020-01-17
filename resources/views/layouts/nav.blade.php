@@ -11,8 +11,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                <a class="nav-link" href="/">Поиск</a>
-                <a class="nav-link" href="/createabonent">Новый абонент</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Абоненты
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/">Поиск абонента</a>
+                        <a class="dropdown-item" href="/createabonent">Новый абонент</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+
+
                 <a class="nav-link" href="/">Временный</a>
                 <a class="nav-link" href="/">Отчеты</a>
                 <a class="nav-link" href="/">Настройки</a>

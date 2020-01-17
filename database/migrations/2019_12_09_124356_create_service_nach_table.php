@@ -18,7 +18,7 @@ class CreateServiceNachTable extends Migration
             $table->bigInteger('abonent_id')->unsigned();
             $table->bigInteger('service_id')->unsigned();
             $table->date('sana_begin');
-            $table->date('sana_end');
+            $table->date('sana_end')->nullable();
             $table->decimal('cena',15,2);
             $table->date('doc_sana');
             $table->string('doc_nomer');

@@ -68,25 +68,25 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-sm-2">
-                        <form method="post" action="/addoplata">
+                    <div class="col-sm-2 ">
+                        <form method="post" action="/addusluga">
                             <input type="hidden" name="ab_id" value="{{$abonents->id}}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="submit" class="btn btn-primary" value="Установка услуги">
+                            <input type="submit" class="btn btn-primary btn-block" value="Установка услуги">
                         </form>
                     </div>
                     <div class="col-sm-2">
                         <form method="post" action="/addoplata">
                             <input type="hidden" name="ab_id" value="{{$abonents->id}}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="submit" class="btn btn-primary" value="Прием оплаты">
+                            <input type="submit" class="btn btn-primary btn-block" value="Прием оплаты">
                         </form>
                     </div>
                     <div class="col-sm-2">
                         <form method="post" action="/editabonent">
                             <input type="hidden" name="ab_id" value="{{$abonents->id}}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="submit" class="btn btn-primary" value="Редактировать абонента">
+                            <input type="submit" class="btn btn-primary btn-block" value="Редактировать">
                         </form>
                     </div>
                 </div>
