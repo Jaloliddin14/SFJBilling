@@ -19,10 +19,24 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/">Поиск абонента</a>
                         <a class="dropdown-item" href="/createabonent">Новый абонент</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                 </li>
 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Настройки
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/createstreettip">Тип адреса</a>
+                        <a class="dropdown-item" href="/">Улицы</a>
+                        <a class="dropdown-item" href="#">Услуги</a>
+                        <a class="dropdown-item" href="#">Цена услуги</a>
+                        <a class="dropdown-item" href="#">Тип оплаты</a>
+                        <a class="dropdown-item" href="#">Пользователи</a>
+                        <a class="dropdown-item" href="#">Закрытие месяца</a>
+                    </div>
+                </li>
 
                 <a class="nav-link" href="/">Временный</a>
                 <a class="nav-link" href="/">Отчеты</a>

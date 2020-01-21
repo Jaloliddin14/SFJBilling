@@ -110,19 +110,42 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                        squid.
-                        3
-                        wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-                        laborum
-                        eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
-                        nulla
-                        assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                        nesciunt
-                        sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                        accusamus
-                        labore sustainable VHS.
+                        <div class="table-responsive">
+
+                            <table class="table table-hover">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th class="th-sm">Номер</th>
+                                    <th class="th-sm">Номер документа</th>
+                                    <th class="th-sm">Дата документа</th>
+                                    <th class="th-sm">Дата Начало</th>
+                                    <th class="th-sm">Услуга</th>
+                                    <th class="th-sm">Цена</th>
+                                    <th class="th-sm">Пользователь</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if ($oplati->isEmpty())
+
+                                @else
+
+                                    @foreach($uslugi as $usl)
+                                        <tr>
+                                            <td>{{ $usl->id }} </td>
+                                            <td>{{ $usl->doc_nomer }} </td>
+                                            <td>{{ Carbon\Carbon::parse($usl->doc_sana)->format('d.m.Y') }} </td>
+                                            <td>{{ Carbon\Carbon::parse($usl->sana_begin)->format('d.m.Y') }} </td>
+                                            <td>{{ $usl->service_name }} </td>
+                                            <th>{{ $usl->cena }} </th>
+                                            <td>{{ $usl->name }} </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -11,10 +11,6 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
 Auth::routes();
 
 Route::get('/','AbonentController@index')->name('home');
@@ -29,9 +25,15 @@ Route::post('/editabonent','AbonentController@edit');
 Route::post('/updateabonent','AbonentController@update');
 
 
-//Route::get('/addoplata/{id?}','OplataController@show');
+
 Route::post('/addoplata','OplataController@index');
 Route::post('/addoplatacreate','OplataController@store');
 
 Route::post('/addusluga','UslugaController@index');
 Route::post('/adduslugacreate','UslugaController@store');
+
+Route::get('/createstreettip','SettingsController@streettipcreateindex');
+Route::post('/addstreettip','SettingsController@addstreettip');
+
+Route::get('/editstreettip/{id}/edit','SettingsController@editstreettip');
+Route::post('/updatestreettip','SettingsController@updatestreettip');

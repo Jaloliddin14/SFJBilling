@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mabonent;
 use App\Usluganach;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -25,7 +26,7 @@ class UslugaController extends Controller
     {
         $id = $request->get('ab_id');
         $abonents = Mabonent::whereId($id)->first();
-        $tip_uslugi = DB::table('services')->where('is_active','1')->get();
+        $tip_uslugi = DB::table('services')->where('is_active', '1')->get();
         return view('Billing.addusluga', compact('abonents', 'tip_uslugi'));
     }
 
@@ -47,7 +48,7 @@ class UslugaController extends Controller
      */
     public function store(Request $request)
     {
-        //ddd($request);
+
 
         $usluga = new Usluganach(array(
 
@@ -58,20 +59,26 @@ class UslugaController extends Controller
             'doc_sana' => $request->get('doc_sana'),
             'doc_nomer' => $request->get('doc_nomer'),
             'is_active' => 1,
-            'user_id' => \Auth::id(),
+            'user_id' => Auth::id(),
             'period' => now()
         ));
         $usluga->save();
         $abonent_id = $request->get('ab_id');
 
         $abonents = Mabonent::whereId($abonent_id)->first();
-        $oplati = DB::table('oplati')->join('oplata_tip','oplata_id','oplata_tip.id')->
+        $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
         join('users', 'user_id', 'users.id')->
-        select('oplati.*','oplata_tip.oplata_tip_name','users.name')->
-        where('abonent_id',$abonent_id)->orderByDesc('sana_add')->get();
+        select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
+        where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
 
+        $uslugi = DB::table('service_nach')->
+        join('users', 'user_id', 'users.id')->
+        select('service_nach.*',  'users.name')->
+        where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
 
-        return view('Billing.abonentshow', compact('abonents','oplati'));
+        ddd($uslugi);
+
+        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
 
     }
 

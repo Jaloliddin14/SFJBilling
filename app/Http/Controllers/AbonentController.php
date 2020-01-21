@@ -99,16 +99,23 @@ class AbonentController extends Controller
     public function show($slug)
     {
         $abonents = Mabonent::whereSlug($slug)->first();
-        $id = $abonents->id;
+        $abonent_id = $abonents->id;
 //        $oplati = DB::table('oplati')->where('abonent_id',$id)->orderByDesc('sana_add')->get();
         $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
         join('users', 'user_id', 'users.id')->
         select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
-        where('abonent_id', $id)->orderByDesc('sana_add')->get();
+        where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
 
 //        ddd($oplati);
+        $uslugi = DB::table('service_nach')->
+        join('services', 'service_id', 'services.id')->
+        join('users', 'user_id', 'users.id')->
+        select('service_nach.*',  'users.name','services.service_name')->
+        where('abonent_id', $abonent_id)->orderByDesc('id')->get();
+        //ddd($uslugi);
+        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
 
-        return view('Billing.abonentshow', compact('abonents', 'oplati'));
+//        return view('Billing.abonentshow', compact('abonents', 'oplati'));
 
     }
 
