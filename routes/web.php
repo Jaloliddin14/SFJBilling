@@ -20,7 +20,6 @@ Route::get('/createabonent','AbonentController@create');
 Route::post('/createabonent','AbonentController@store');
 Route::post('/','AbonentController@index');
 Route::get('/abonentsearch/{slug?}', 'AbonentController@show');
-Route::post('/','AbonentController@index');
 Route::post('/editabonent','AbonentController@edit');
 Route::post('/updateabonent','AbonentController@update');
 

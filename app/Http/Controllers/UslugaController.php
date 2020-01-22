@@ -72,11 +72,12 @@ class UslugaController extends Controller
         where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
 
         $uslugi = DB::table('service_nach')->
+        join('services', 'service_id', 'services.id')->
         join('users', 'user_id', 'users.id')->
-        select('service_nach.*',  'users.name')->
-        where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
+        select('service_nach.*',  'users.name','services.service_name')->
+        where('abonent_id', $abonent_id)->orderByDesc('id')->get();
 
-        ddd($uslugi);
+        //ddd($uslugi);
 
         return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
 

@@ -125,7 +125,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if ($oplati->isEmpty())
+                                @if ($uslugi->isEmpty())
 
                                 @else
 

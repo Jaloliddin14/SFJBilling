@@ -115,7 +115,7 @@ class AbonentController extends Controller
         //ddd($uslugi);
         return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
 
-//        return view('Billing.abonentshow', compact('abonents', 'oplati'));
+
 
     }
 
