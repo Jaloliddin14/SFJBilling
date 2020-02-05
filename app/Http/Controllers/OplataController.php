@@ -30,7 +30,6 @@ class OplataController extends Controller
         $abonents = Mabonent::whereId($id)->first();
         $tip_oplat = TipOplat::all(['id', 'oplata_tip_name']);
         return view('Billing.addoplata', compact('abonents', 'tip_oplat'));
-
     }
 
     /**
@@ -51,9 +50,7 @@ class OplataController extends Controller
      */
     public function store(Request $request)
     {
-
         $oplata = new Oplata(array(
-
             'abonent_id' => $request->get('ab_id'),
             'doc_sana' => $request->get('doc_sana'),
             'doc_nomer' => $request->get('doc_nomer'),
@@ -64,17 +61,25 @@ class OplataController extends Controller
             'period' => now()
         ));
         $oplata->save();
+
         $abonent_id = $request->get('ab_id');
 
-        $abonents = Mabonent::whereId($abonent_id)->first();
+        $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
+        select('abonent.*', 'street.street_name')->
+        where('abonent_id', $abonent_id)->first();
+
         $oplati = DB::table('oplati')->join('oplata_tip','oplata_id','oplata_tip.id')->
         join('users', 'user_id', 'users.id')->
         select('oplati.*','oplata_tip.oplata_tip_name','users.name')->
         where('abonent_id',$abonent_id)->orderByDesc('sana_add')->get();
 
-        //ddd($oplati);
-        return view('Billing.abonentshow', compact('abonents','oplati'));
-
+        $uslugi = DB::table('service_nach')->
+        join('services', 'service_id', 'services.id')->
+        join('users', 'user_id', 'users.id')->
+        select('service_nach.*',  'users.name','services.service_name')->
+        where('abonent_id', $abonent_id)->orderByDesc('id')->get();
+        //ddd($uslugi);
+        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
     }
 
     /**
@@ -85,11 +90,9 @@ class OplataController extends Controller
      */
     public function show($id)
     {
-
         $abonents = Mabonent::whereId($id)->first();
         $tip_oplat = TipOplat::all(['id', 'oplata_tip_name']);
         return view('Billing.addoplata', compact('abonents', 'tip_oplat'));
-
     }
 
     /**

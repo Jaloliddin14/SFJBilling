@@ -68,10 +68,16 @@
                         <div class="form-group">
                             <label for="add_street_id" class="col-lg-10 control-label">Улица</label>
                             <div class="col-lg-auto">
-                                <input type="text" class="form-control" id="add_street_id" name="add_street_id"
-                                       value="{{$abonents->add_street_id}}">
+
+                                <select class="form-control" name="add_street_id" id="add_street_id">
+                                    @foreach($street as $item)
+                                        <option value="{{$item->id}}"
+                                            {{ $abonents->add_street_id==$item->id ? 'selected' : '' }}>{{$item->street_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
+
 
                         <div class="form-row">
                             <div class="form-group col-md-3">

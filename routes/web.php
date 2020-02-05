@@ -13,6 +13,7 @@
 
 Auth::routes();
 
+Route::get('/test','SettingsController@test');
 Route::get('/','AbonentController@index')->name('home');
 //Route::get('/', 'HomeController@index')->name('home');
 
@@ -33,6 +34,29 @@ Route::post('/adduslugacreate','UslugaController@store');
 
 Route::get('/createstreettip','SettingsController@streettipcreateindex');
 Route::post('/addstreettip','SettingsController@addstreettip');
-
 Route::get('/editstreettip/{id}/edit','SettingsController@editstreettip');
 Route::post('/updatestreettip','SettingsController@updatestreettip');
+
+Route::get('/createstreet','SettingsController@streetcreateindex');
+Route::post('/addstreet','SettingsController@addstreet');
+Route::get('/editstreet/{id}/edit','SettingsController@editstreet');
+Route::post('/updatestreet','SettingsController@updatestreet');
+
+Route::get('/createoplatatip','SettingsController@oplatatipcreateindex');
+Route::post('/addoplatatip','SettingsController@addoplatatip');
+Route::get('/editoplatatip/{id}/edit','SettingsController@editoplatatip');
+Route::post('/updateoplatatip','SettingsController@updateoplatatip');
+
+Route::get('/createservice','SettingsController@servicecreateindex');
+Route::post('/addservice','SettingsController@addservice');
+Route::get('/editservice/{id}/edit','SettingsController@editservice');
+Route::post('/updateservice','SettingsController@updateservice');
+
+Route::get('/createservicecena','SettingsController@servicecenacreateindex');
+Route::get('/editservicecena/{id}/edit','SettingsController@editservicecena');
+Route::post('/addservicecena','SettingsController@addservicecena');
+
+Route::get('/createusers','SettingsController@userscreateindex');
+Route::post('/addusers','SettingsController@addusers');
+Route::get('/editusers/{id}/edit','SettingsController@editusers');
+Route::post('/updateusers','SettingsController@updateusers');

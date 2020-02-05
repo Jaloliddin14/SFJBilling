@@ -98,25 +98,26 @@ class AbonentController extends Controller
      */
     public function show($slug)
     {
-        $abonents = Mabonent::whereSlug($slug)->first();
+//        $abonents = Mabonent::whereSlug($slug)->first();
+
+        $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
+        select('abonent.*', 'street.street_name')->
+        where('slug', $slug)->first();
+
         $abonent_id = $abonents->id;
-//        $oplati = DB::table('oplati')->where('abonent_id',$id)->orderByDesc('sana_add')->get();
+
         $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
         join('users', 'user_id', 'users.id')->
         select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
         where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
 
-//        ddd($oplati);
         $uslugi = DB::table('service_nach')->
         join('services', 'service_id', 'services.id')->
         join('users', 'user_id', 'users.id')->
-        select('service_nach.*',  'users.name','services.service_name')->
+        select('service_nach.*', 'users.name', 'services.service_name')->
         where('abonent_id', $abonent_id)->orderByDesc('id')->get();
-        //ddd($uslugi);
+
         return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
-
-
-
     }
 
     /**
@@ -131,7 +132,8 @@ class AbonentController extends Controller
 
         $abonent_id = $request->get('ab_id');
         $abonents = Mabonent::whereId($abonent_id)->first();
-        return view('Billing.abonentedit', compact('abonents'));
+        $street = Streets::all();
+        return view('Billing.abonentedit', compact('abonents', 'street'));
 
     }
 
@@ -144,11 +146,9 @@ class AbonentController extends Controller
      */
     public function update(Request $request)
     {
-
-        //ddd($request);
         $abonent_id = $request->get('ab_id');
+
         $ab = Mabonent::whereId($abonent_id)->first();
-        //ddd($ab);
         $ab->pass_fio = $request->get('pass_fio');
         $ab->pass_seriya = $request->get('pass_seriya');
         $ab->pass_nomer = $request->get('pass_nomer');
@@ -168,15 +168,22 @@ class AbonentController extends Controller
         $ab->email = $request->get('email');
         $ab->save();
 
-        $abonents = Mabonent::whereId($abonent_id)->first();
+        $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
+        select('abonent.*', 'street.street_name')->
+        where('abonent_id', $abonent_id)->first();
+
         $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
         join('users', 'user_id', 'users.id')->
         select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
         where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
 
-        //ddd($oplati);
-        return view('Billing.abonentshow', compact('abonents', 'oplati'));
+        $uslugi = DB::table('service_nach')->
+        join('services', 'service_id', 'services.id')->
+        join('users', 'user_id', 'users.id')->
+        select('service_nach.*', 'users.name', 'services.service_name')->
+        where('abonent_id', $abonent_id)->orderByDesc('id')->get();
 
+        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
 
     }
 
@@ -193,7 +200,6 @@ class AbonentController extends Controller
 
     public function checkdemo(Request $request)
     {
-
         $query = Mabonent::query();
 
         if ($request->get('abonent_id') != '') $query = $query->where('id', $request->get('abonent_id'));

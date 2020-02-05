@@ -48,10 +48,7 @@ class UslugaController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $usluga = new Usluganach(array(
-
             'abonent_id' => $request->get('ab_id'),
             'service_id' => $request->get('item_id'),
             'sana_begin' => $request->get('sana_begin'),
@@ -63,9 +60,13 @@ class UslugaController extends Controller
             'period' => now()
         ));
         $usluga->save();
+
         $abonent_id = $request->get('ab_id');
 
-        $abonents = Mabonent::whereId($abonent_id)->first();
+        $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
+        select('abonent.*', 'street.street_name')->
+        where('abonent_id', $abonent_id)->first();
+
         $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
         join('users', 'user_id', 'users.id')->
         select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
@@ -74,10 +75,8 @@ class UslugaController extends Controller
         $uslugi = DB::table('service_nach')->
         join('services', 'service_id', 'services.id')->
         join('users', 'user_id', 'users.id')->
-        select('service_nach.*',  'users.name','services.service_name')->
+        select('service_nach.*', 'users.name', 'services.service_name')->
         where('abonent_id', $abonent_id)->orderByDesc('id')->get();
-
-        //ddd($uslugi);
 
         return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
 

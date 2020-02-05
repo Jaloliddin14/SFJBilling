@@ -29,16 +29,16 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/createstreettip">Тип адреса</a>
-                        <a class="dropdown-item" href="/">Улицы</a>
-                        <a class="dropdown-item" href="#">Услуги</a>
-                        <a class="dropdown-item" href="#">Цена услуги</a>
-                        <a class="dropdown-item" href="#">Тип оплаты</a>
-                        <a class="dropdown-item" href="#">Пользователи</a>
+                        <a class="dropdown-item" href="/createstreet">Улицы</a>
+                        <a class="dropdown-item" href="/createservice">Услуги</a>
+                        <a class="dropdown-item" href="/createservicecena">Цена услуги</a>
+                        <a class="dropdown-item" href="/createoplatatip">Тип оплаты</a>
+                        <a class="dropdown-item" href="/createusers">Пользователи</a>
                         <a class="dropdown-item" href="#">Закрытие месяца</a>
                     </div>
                 </li>
 
-                <a class="nav-link" href="/">Временный</a>
+
                 <a class="nav-link" href="/">Отчеты</a>
                 <a class="nav-link" href="/">Настройки</a>
             </ul>

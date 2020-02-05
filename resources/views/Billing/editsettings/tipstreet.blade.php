@@ -24,7 +24,7 @@
 
 
                         <div class="form-group">
-                            <label for="tip_street_name" class="col-lg-10 control-label">Номер документа</label>
+                            <label for="tip_street_name" class="col-lg-10 control-label">Тип адреса</label>
                             <div class="col-lg-auto">
                                 <input type="text" class="form-control" id="tip_street_name"
                                        placeholder="Тип адреса (улица, проспект,...)" name="tip_street_name">
@@ -62,7 +62,7 @@
                                 <tr>
                                     <td>{{ $stt->id }} </td>
                                     <td>{{ $stt->street_tip_name }} </td>
-                                    <td>{{ $stt->is_active }} </td>
+                                    <td>@if( $stt->is_active) Активный @else Не активный @endif </td>
                                     <th>
                                         <a href="{{action('SettingsController@editstreettip',$stt->id)}}" class="btn btn-info btn-sm">Редактировать</a>
                                     </th>

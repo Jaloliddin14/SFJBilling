@@ -14,9 +14,11 @@
                         <p><strong>Счет абонента</strong>: {{ $abonents-> id}} </p>
                     </div>
                     <div class="col-sm">
-                        <p><strong>Адрес</strong>: ул. {{ $abonents-> add_street_id }} Дом {{ $abonents-> add_dom }}
-                            Корпус {{ $abonents-> add_korpus }} Подъезд {{ $abonents-> add_podyezd }}
-                            Квартира {{ $abonents-> add_kvartira }}</p>
+                        <p><strong>Адрес</strong>: ул. {{ $abonents-> street_name }}
+                            <strong>Дом</strong> {{ $abonents-> add_dom }}
+                            <strong>Корпус</strong> {{ $abonents-> add_korpus }}
+                            <strong>Подъезд</strong> {{ $abonents-> add_podyezd }}
+                            <strong>Квартира</strong> {{ $abonents-> add_kvartira }}</p>
                     </div>
                 </div>
                 <div class="row">

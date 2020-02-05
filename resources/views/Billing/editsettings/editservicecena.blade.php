@@ -4,11 +4,11 @@
     <div class="container col-md-8 col-md-offset-2">
         <div class="card mt-5">
             <div class="card-header ">
-                <h5 class="float-left">Добавить тип адреса</h5>
+                <h5 class="float-left">Новый тариф для: {{$service->service_name}}</h5>
                 <div class="clearfix"></div>
             </div>
             <div class="card-body mt-2">
-                <form method="post" action="/addstreet">
+                <form method="post" action="/addservicecena">
                     @foreach ($errors->all() as $error)
                         <p class="alert alert-danger">{{ $error }}</p>
                     @endforeach
@@ -19,26 +19,25 @@
                     @endif
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="service_id" value="{{ $service->id }}">
 
                     <fieldset>
 
 
                         <div class="form-group">
-                            <label for="street_name" class="col-lg-10 control-label">Адрес</label>
+                            <label for="pul" class="col-md-12 control-label">Сумма</label>
                             <div class="col-lg-auto">
-                                <input type="text" class="form-control" id="street_name"
-                                       placeholder="И. Каримов" name="street_name">
+                                <input type="number" step="any" class="form-control" id="pul"
+                                       placeholder="Введите сумму"
+                                       name="pul">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="tip_street_name" class="col-lg-10 control-label">Адрес</label>
+                            <label for="sana_begin" class="col-lg-10 control-label">Дата документа</label>
                             <div class="col-lg-auto">
-                                <select class="form-control" name="tip_street_item_id" id="tip_street_name">
-                                    @foreach($street_tip as $item)
-                                        <option value="{{$item->id}}">{{$item->street_tip_name}}</option>
-                                    @endforeach
-                                </select>
+                                <input type="date" class="form-control" id="sana_begin" placeholder="Дата начало"
+                                       name="sana_begin" value="<?php echo date('Y-m-d');?>">
                             </div>
                         </div>
 
@@ -58,38 +57,31 @@
                         <thead class="thead-light">
                         <tr>
                             <th class="th-sm">ID</th>
-                            <th class="th-sm">Наименование</th>
-                            <th class="th-sm">Тип</th>
+                            <th class="th-sm">Цена</th>
+                            <th class="th-sm">Дата Начало</th>
+                            <th class="th-sm">Дата конец</th>
                             <th class="th-sm">Активность</th>
-                            <th class="th-sm">Действие</th>
 
                         </tr>
                         </thead>
                         <tbody>
-                        @if ($street->isEmpty())
-
+                        @if ($servicecena->isEmpty())
+                            Услуги не найдены.
                         @else
-
-                            @foreach($street as $stt)
+                            @foreach($servicecena as $stt)
                                 <tr>
                                     <td>{{ $stt->id }} </td>
-                                    <td>{{ $stt->street_name }} </td>
-                                    <td>{{ $stt->street_tip_name }} </td>
+                                    <td>{{ $stt->cena }} </td>
+                                    <td>{{ $stt->sana_begin }} </td>
+                                    <td>{{ $stt->sana_end }} </td>
                                     <td>@if( $stt->is_active) Активный @else Не активный @endif </td>
-                                    <th>
-                                        <a href="{{action('SettingsController@editstreet',$stt->id)}}" class="btn btn-info btn-sm">Редактировать</a>
-                                    </th>
-
                                 </tr>
                             @endforeach
                         @endif
                         </tbody>
                     </table>
-
                 </div>
-
             </div>
-
         </div>
     </div>
 

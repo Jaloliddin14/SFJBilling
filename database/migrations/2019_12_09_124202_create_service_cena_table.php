@@ -17,8 +17,8 @@ class CreateServiceCenaTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('service_id')->unsigned();
             $table->decimal('cena',15,2);
-            $table->date('sana_begin');
-            $table->date('sana_end');
+            $table->date('sana_begin')->nullable();
+            $table->date('sana_end')->nullable();
             $table->boolean('is_active');
             $table->foreign('service_id')->references('id')->on('services');
             $table->timestamps();

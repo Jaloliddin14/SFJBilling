@@ -17,6 +17,7 @@ class CreateServicesTable extends Migration
             $table->bigIncrements('id');
             $table->string('service_name');
             $table->boolean('is_active');
+            $table->boolean('monthly_disposible');
             $table->timestamps();
         });
     }

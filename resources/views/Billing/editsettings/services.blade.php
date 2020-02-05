@@ -4,11 +4,11 @@
     <div class="container col-md-8 col-md-offset-2">
         <div class="card mt-5">
             <div class="card-header ">
-                <h5 class="float-left">Добавить тип адреса</h5>
+                <h5 class="float-left">Добавить Услугу</h5>
                 <div class="clearfix"></div>
             </div>
             <div class="card-body mt-2">
-                <form method="post" action="/addstreet">
+                <form method="post" action="/addservice">
                     @foreach ($errors->all() as $error)
                         <p class="alert alert-danger">{{ $error }}</p>
                     @endforeach
@@ -24,20 +24,18 @@
 
 
                         <div class="form-group">
-                            <label for="street_name" class="col-lg-10 control-label">Адрес</label>
+                            <label for="service_name" class="col-lg-10 control-label">Наименование услуги</label>
                             <div class="col-lg-auto">
-                                <input type="text" class="form-control" id="street_name"
-                                       placeholder="И. Каримов" name="street_name">
+                                <input type="text" class="form-control" id="service_name" name="service_name">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="tip_street_name" class="col-lg-10 control-label">Адрес</label>
+                            <label for="monthly_disposible" class="col-lg-10 control-label">Периодичность услуги</label>
                             <div class="col-lg-auto">
-                                <select class="form-control" name="tip_street_item_id" id="tip_street_name">
-                                    @foreach($street_tip as $item)
-                                        <option value="{{$item->id}}">{{$item->street_tip_name}}</option>
-                                    @endforeach
+                                <select class="form-control" name="monthly_disposible" id="monthly_disposible">
+                                    <option value="0">Ежемесячная услуга</option>
+                                    <option value="1">Одноразовая услуга</option>
                                 </select>
                             </div>
                         </div>
@@ -59,37 +57,34 @@
                         <tr>
                             <th class="th-sm">ID</th>
                             <th class="th-sm">Наименование</th>
-                            <th class="th-sm">Тип</th>
+                            <th class="th-sm">Периодичность</th>
                             <th class="th-sm">Активность</th>
                             <th class="th-sm">Действие</th>
 
                         </tr>
                         </thead>
                         <tbody>
-                        @if ($street->isEmpty())
-
+                        @if ($services->isEmpty())
+                            Услуги не найдены.
                         @else
-
-                            @foreach($street as $stt)
+                            @foreach($services as $stt)
                                 <tr>
                                     <td>{{ $stt->id }} </td>
-                                    <td>{{ $stt->street_name }} </td>
-                                    <td>{{ $stt->street_tip_name }} </td>
+                                    <td>{{ $stt->service_name }} </td>
+                                    <td>@if( $stt->monthly_disposible) Одноразовая услуга @else Ежемесячная
+                                        услуга @endif </td>
                                     <td>@if( $stt->is_active) Активный @else Не активный @endif </td>
                                     <th>
-                                        <a href="{{action('SettingsController@editstreet',$stt->id)}}" class="btn btn-info btn-sm">Редактировать</a>
+                                        <a href="{{action('SettingsController@editservice',$stt->id)}}"
+                                           class="btn btn-info btn-sm">Редактировать</a>
                                     </th>
-
                                 </tr>
                             @endforeach
                         @endif
                         </tbody>
                     </table>
-
                 </div>
-
             </div>
-
         </div>
     </div>
 
