@@ -31,11 +31,21 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="monthly_disposible" class="col-lg-10 control-label">Периодичность услуги</label>
+                            <label for="monthly" class="col-lg-10 control-label">Периодичность услуги</label>
                             <div class="col-lg-auto">
-                                <select class="form-control" name="monthly_disposible" id="monthly_disposible">
-                                    <option value="0">Ежемесячная услуга</option>
-                                    <option value="1">Одноразовая услуга</option>
+                                <select class="form-control" name="monthly" id="monthly">
+                                    <option value="0">Одноразовая услуга</option>
+                                    <option value="1">Ежемесячная услуга</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cena_dinamic" class="col-lg-10 control-label">Стоимость</label>
+                            <div class="col-lg-auto">
+                                <select class="form-control" name="cena_dinamic" id="cena_dinamic">
+                                    <option value="0">По Тарифу</option>
+                                    <option value="1">Изменяемая</option>
                                 </select>
                             </div>
                         </div>
@@ -71,7 +81,7 @@
                                 <tr>
                                     <td>{{ $stt->id }} </td>
                                     <td>{{ $stt->service_name }} </td>
-                                    <td>@if( $stt->monthly_disposible) Одноразовая услуга @else Ежемесячная
+                                    <td>@if( $stt->monthly) Ежемесячная @else Одноразовая услуга
                                         услуга @endif </td>
                                     <td>@if( $stt->is_active) Активный @else Не активный @endif </td>
                                     <th>

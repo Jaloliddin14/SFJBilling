@@ -66,7 +66,7 @@ class OplataController extends Controller
 
         $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
         select('abonent.*', 'street.street_name')->
-        where('abonent_id', $abonent_id)->first();
+        where('slug', $request->get('slug'))->first();
 
         $oplati = DB::table('oplati')->join('oplata_tip','oplata_id','oplata_tip.id')->
         join('users', 'user_id', 'users.id')->

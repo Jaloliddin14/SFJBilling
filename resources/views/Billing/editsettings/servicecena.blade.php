@@ -30,7 +30,7 @@
                                 <tr>
                                     <td>{{ $stt->id }} </td>
                                     <td>{{ $stt->service_name }} </td>
-                                    <td>@if( $stt->monthly_disposible) Одноразовая услуга @else Ежемесячная
+                                    <td>@if( $stt->monthly) Ежемесячная @else Одноразовая услуга
                                         услуга @endif </td>
                                     <td>@if( $stt->is_active) Активный @else Не активный @endif </td>
                                     <td>{{ $stt->id }} </td>

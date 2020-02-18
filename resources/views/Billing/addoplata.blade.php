@@ -20,6 +20,7 @@
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="ab_id" value="{{$abonents->id}}">
+                    <input type="hidden" name="slug" value="{{$abonents->slug}}">
                     <fieldset>
 
                         <div class="row">

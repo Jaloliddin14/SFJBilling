@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mabonent;
+use App\Services;
 use App\Usluganach;
 use Auth;
 use Illuminate\Http\Request;
@@ -48,24 +49,36 @@ class UslugaController extends Controller
      */
     public function store(Request $request)
     {
-        $usluga = new Usluganach(array(
-            'abonent_id' => $request->get('ab_id'),
-            'service_id' => $request->get('item_id'),
-            'sana_begin' => $request->get('sana_begin'),
-            'cena' => 2,
-            'doc_sana' => $request->get('doc_sana'),
-            'doc_nomer' => $request->get('doc_nomer'),
-            'is_active' => 1,
-            'user_id' => Auth::id(),
-            'period' => now()
-        ));
-        $usluga->save();
-
         $abonent_id = $request->get('ab_id');
+//       ddd($request);
+        $usl = Services::where('id', $request->get('item_id'))->first();
+        $monthly = $usl->monthly;
+        $cena_dinamic = $usl->cena_dinamic;
+
+        //ddd($usl);
+        if (!$monthly) {
+            if ($cena_dinamic) {
+                $usluga = new Usluganach(array(
+                    'abonent_id' => $request->get('ab_id'),
+                    'service_id' => $request->get('item_id'),
+                    'sana_begin' => $request->get('sana_begin'),
+                    'cena' => $request->get('cena'),
+                    'doc_sana' => $request->get('doc_sana'),
+                    'doc_nomer' => $request->get('doc_nomer'),
+                    'is_active' => 1,
+                    'user_id' => Auth::id(),
+                    'period' => now()
+                ));
+                $usluga->save();
+            }
+        }
+
+
+
 
         $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
         select('abonent.*', 'street.street_name')->
-        where('abonent_id', $abonent_id)->first();
+        where('slug', $request->get('slug'))->first();
 
         $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
         join('users', 'user_id', 'users.id')->

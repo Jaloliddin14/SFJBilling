@@ -196,7 +196,8 @@ class SettingsController extends Controller
         $serviceadd = new Services(array(
                 'service_name' => $request->get('service_name'),
                 'is_active' => 1,
-                'monthly_disposible' => $request->get('monthly_disposible'),
+                'monthly' => $request->get('monthly'),
+                'cena_dinamic' => $request->get('cena_dinamic'),
             )
         );
         $serviceadd->save();
@@ -217,7 +218,7 @@ class SettingsController extends Controller
         $service = Services::where('id', $idd)->first();
 
         $service->service_name = $request->get('service_name');
-        $service->monthly_disposible = $request->get('monthly_disposible');
+        $service->monthly = $request->get('monthly');
         if ($request->get('isactive') != null) {
             $service->is_active = 1;
         } else {
@@ -234,7 +235,7 @@ class SettingsController extends Controller
     /////////////////////////////////////////////////// Цена Услуги ////////////////////////////////////////////
     public function servicecenacreateindex()
     {
-        $servicecena = Services::where('monthly_disposible', '0')->where('is_active', '1')->get();
+        $servicecena = Services::where('monthly', '1')->where('is_active', '1')->get();
         return view('Billing.editsettings.servicecena', compact('servicecena'));
     }
 

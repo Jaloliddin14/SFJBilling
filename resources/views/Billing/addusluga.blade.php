@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 
+
 @section('content')
     <div class="container col-md-8 col-md-offset-2">
         <div class="card mt-5">
@@ -19,6 +20,7 @@
                     @endif
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="slug" value="{{$abonents->slug}}">
                     <input type="hidden" name="ab_id" value="{{$abonents->id}}">
                     <fieldset>
 
@@ -31,17 +33,27 @@
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <label for="pul_tip" class="col-lg-10 control-label">Услуга</label>
                             <div class="col-lg-auto">
-                                <select class="form-control" name="item_id">
+                                <select class="form-control" name="item_id" id="item_id">
                                     @foreach($tip_uslugi as $item)
-                                        <option value="{{$item->id}}">{{$item->service_name}}</option>
+                                        <option value="{{$item->id}}" data-disable="#cena">
+                                            {{$item->service_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="cena" class="col-md-12 control-label">Сумма</label>
+                            <div class="col-lg-auto">
+                                <input type="number" step="any" class="form-control" id="cena"
+                                       placeholder="Введите сумму"
+                                       name="cena">
+                            </div>
+                        </div>
+
 
                         <div class="form-group">
                             <label for="sana_begin" class="col-lg-10 control-label">Дата начало</label>
@@ -79,3 +91,6 @@
         </div>
     </div>
 @endsection
+
+
+
