@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\StreetTip;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class SettingsController extends Controller
 {
@@ -235,7 +236,7 @@ class SettingsController extends Controller
     /////////////////////////////////////////////////// Цена Услуги ////////////////////////////////////////////
     public function servicecenacreateindex()
     {
-        $servicecena = Services::where('monthly', '1')->where('is_active', '1')->get();
+        $servicecena = Services::where('cena_dinamic', '0')->where('is_active', '1')->get();
         return view('Billing.editsettings.servicecena', compact('servicecena'));
     }
 
@@ -250,7 +251,7 @@ class SettingsController extends Controller
     {
         $id = $request->get('service_id');
         $lastsana = ServiceCena::where('service_id', $id)->where('is_active', '1')->first();
-        if ($lastsana != null) {
+        if ($lastsana != null) { //'2099-01-01'
             if ((((strtotime($request->get('sana_begin')) - strtotime($lastsana->sana_begin)) / 86400) >= 2)
                 && ($request->get('pul') != null)) {
 
@@ -269,6 +270,7 @@ class SettingsController extends Controller
                 'service_id' => $request->get('service_id'),
                 'cena' => $request->get('pul'),
                 'sana_begin' => $request->get('sana_begin'),
+                'sana_end' => '2099-01-01',
                 'is_active' => 1
             )
         );
@@ -341,5 +343,22 @@ class SettingsController extends Controller
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /////////////////////////////////////////////////// Закрытие месяца /////////////////////////////////////
+
+    public function closemonthpage()
+    {
+        $close = DB::table('syssana')->first();
+        return view('Billing.editsettings.closemonth', compact('close'));
+    }
+
+    public function closemonthfunc()
+    {
+        $it = DB::select('select end_month() as id');
+        //ddd($it);
+        $close = DB::table('syssana')->first();
+        return view('Billing.editsettings.closemonth', compact('close'));
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }

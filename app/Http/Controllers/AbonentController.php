@@ -100,6 +100,8 @@ class AbonentController extends Controller
     {
 //        $abonents = Mabonent::whereSlug($slug)->first();
 
+        $period = DB::table('syssana')->first('tekoy');
+
         $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
         select('abonent.*', 'street.street_name')->
         where('slug', $slug)->first();
@@ -115,9 +117,16 @@ class AbonentController extends Controller
         join('services', 'service_id', 'services.id')->
         join('users', 'user_id', 'users.id')->
         select('service_nach.*', 'users.name', 'services.service_name')->
-        where('abonent_id', $abonent_id)->orderByDesc('id')->get();
+        where('abonent_id', $abonent_id)->where('period',$period->tekoy)->
+        orderByDesc('id')->get();
+        $syssana = DB::table('syssana')->first('tekoy');
 
-        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
+        $payment = DB::table('payment')->where('abonent_id', $abonent_id)
+            ->where('period', $syssana->tekoy)->first();
+
+        $payments = DB::table('payment')->where('abonent_id', $abonent_id)->get();
+
+        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi','payment','payments'));
     }
 
     /**

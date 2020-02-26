@@ -34,7 +34,7 @@
                         <a class="dropdown-item" href="/createservicecena">Цена услуги</a>
                         <a class="dropdown-item" href="/createoplatatip">Тип оплаты</a>
                         <a class="dropdown-item" href="/createusers">Пользователи</a>
-                        <a class="dropdown-item" href="#">Закрытие месяца</a>
+                        <a class="dropdown-item" href="/closemonthpage">Закрытие месяца</a>
                     </div>
                 </li>
 

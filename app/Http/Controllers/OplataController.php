@@ -50,6 +50,8 @@ class OplataController extends Controller
      */
     public function store(Request $request)
     {
+        $period = DB::table('syssana')->first('tekoy');
+
         $oplata = new Oplata(array(
             'abonent_id' => $request->get('ab_id'),
             'doc_sana' => $request->get('doc_sana'),
@@ -58,7 +60,7 @@ class OplataController extends Controller
             'oplata' => $request->get('pul'),
             'oplata_id' => $request->get('item_id'),
             'user_id' => \Auth::id(),
-            'period' => now()
+            'period' => $period->tekoy
         ));
         $oplata->save();
 

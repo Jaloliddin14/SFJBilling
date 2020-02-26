@@ -49,6 +49,7 @@
                     <div class="col-sm">
                         <p><strong>Дата рождение</strong>: {{ $abonents-> pass_sana_birth}} </p>
                     </div>
+
                     <div class="col-sm">
                         <p><strong>Дата получение</strong>: {{ $abonents-> pass_sana_get}} </p>
                     </div>
@@ -62,10 +63,17 @@
 
                 <div class="row">
                     <div class="col-sm">
-                        <p><strong>Баланс</strong>: {{ $abonents-> pass_sana_birth}} </p>
+                        <p><strong>Сальдо на начало :</strong>: {{ $payment-> saldo_begin}} </p>
                     </div>
                     <div class="col-sm">
-                        <p><strong>Последняя оплата</strong>: {{ $abonents-> pass_sana_get}} </p>
+                        <p><strong>Начисление :</strong>: {{ $payment->service_nach}} </p>
+                    </div>
+                    <div class="col-sm">
+                        <p><strong>Оплаты :</strong>: {{ $payment->oplata}} </p>
+                    </div>
+                    <div class="col-sm">
+                        <p @if($payment->saldo_end>0) style="color:green;" @else style="color:red;" @endif><strong>Сальдо
+                                на конец : {{ $payment->saldo_end}}</strong></p>
                     </div>
                 </div>
                 <div class="row">
@@ -211,19 +219,37 @@
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                        squid.
-                        3
-                        wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-                        laborum
-                        eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
-                        nulla
-                        assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                        nesciunt
-                        sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                        accusamus
-                        labore sustainable VHS.
+                        <div class="table-responsive">
+
+                            <table class="table table-hover">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th class="th-sm">Сальдо на начало </th>
+                                    <th class="th-sm">Начисление услуг</th>
+                                    <th class="th-sm">Поступление</th>
+                                    <th class="th-sm">Сальдо на конец</th>
+                                    <th class="th-sm">Месяц</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if ($payments->isEmpty())
+
+                                @else
+
+                                    @foreach($payments as $pm)
+                                        <tr>
+                                            <td>{{ $pm->saldo_begin }} </td>
+                                            <td>{{ $pm->service_nach }} </td>
+                                            <td>{{ $pm->oplata }} </td>
+                                            <td>{{ $pm->saldo_end }} </td>
+                                            <td>{{ Carbon\Carbon::parse($pm->period)->format('d.m.Y') }} </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
             </div>

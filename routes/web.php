@@ -60,3 +60,7 @@ Route::get('/createusers','SettingsController@userscreateindex');
 Route::post('/addusers','SettingsController@addusers');
 Route::get('/editusers/{id}/edit','SettingsController@editusers');
 Route::post('/updateusers','SettingsController@updateusers');
+
+Route::get('/closemonthpage','SettingsController@closemonthpage');
+Route::post('/closemonthfunc','SettingsController@closemonthfunc');
+

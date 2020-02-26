@@ -49,32 +49,89 @@ class UslugaController extends Controller
      */
     public function store(Request $request)
     {
+        $period = DB::table('syssana')->first('tekoy');
+        $sid = $request->get('item_id');
         $abonent_id = $request->get('ab_id');
-//       ddd($request);
+        $ssana = $request->get('sana_begin');
+        $sana_bg = $request->get('sana_begin');
+        $sana_ed1 = DB::select('SELECT tekoy FROM syssana');
+        $sana_ed = $sana_ed1[0]; //------------->?????
+        $lastday = date('Y-m-t', strtotime($sana_ed->tekoy));
+        $firs_day = date('Y-m-01', strtotime($sana_bg));
+
         $usl = Services::where('id', $request->get('item_id'))->first();
         $monthly = $usl->monthly;
         $cena_dinamic = $usl->cena_dinamic;
 
-        //ddd($usl);
+
         if (!$monthly) {
             if ($cena_dinamic) {
-                $usluga = new Usluganach(array(
-                    'abonent_id' => $request->get('ab_id'),
-                    'service_id' => $request->get('item_id'),
-                    'sana_begin' => $request->get('sana_begin'),
-                    'cena' => $request->get('cena'),
-                    'doc_sana' => $request->get('doc_sana'),
-                    'doc_nomer' => $request->get('doc_nomer'),
-                    'is_active' => 1,
-                    'user_id' => Auth::id(),
-                    'period' => now()
-                ));
-                $usluga->save();
+                $cena = $request->get('cena');
+            } else {
+                $cena = DB::select('SELECT distinct get_cena(:sid,:sana) as cn FROM services', ['sid' => $sid, 'sana' => $sana_bg]);
             }
+            $usluga = new Usluganach(array(
+                'abonent_id' => $request->get('ab_id'),
+                'service_id' => $request->get('item_id'),
+                'sana_begin' => $request->get('sana_begin'),
+                'cena' => $cena[0]->cn,
+                'doc_sana' => $request->get('doc_sana'),
+                'doc_nomer' => $request->get('doc_nomer'),
+                'is_active' => 1,
+                'user_id' => Auth::id(),
+                'period' => $period->tekoy
+            ));
+            $usluga->save();
+        } else {
+            $itcena = 0;
+
+            $month_cnt = (getdate(strtotime($lastday))['mon'] - getdate(strtotime($sana_bg))['mon'] + 1 +
+                (getdate(strtotime($lastday))['year'] - getdate(strtotime($sana_bg))['year']) * 12);
+            $xmonth = 0;
+            //ddd($month_cnt);
+            for ($i = 0; $i < $month_cnt; $i++) {
+                if ($i == 0) {
+                    $mdays = cal_days_in_month(CAL_GREGORIAN, getdate(strtotime($sana_bg))['mon'], getdate(strtotime($sana_bg))['year']);
+                    $bdays = getdate(strtotime($sana_bg))['mday'];
+                    $itdays = $mdays - $bdays + 1;
+                    $tarif_cena = DB::select('SELECT distinct get_cena(:sid,:sana) as cn FROM services', ['sid' => $sid, 'sana' => $sana_bg]);
+                    $itcena = ($tarif_cena[0]->cn / $mdays) * $itdays;
+                    $xmonth = $xmonth + 1;
+                    //ddd($itcena);
+                } else {
+
+                    $firs_day = strtotime($ssana);
+                    $ssana = date("Y-m-d", strtotime("+1 month", $firs_day));
+                    $tarif_cena = DB::select('SELECT distinct get_cena(:sid,:sana) as cn FROM services', ['sid' => $sid, 'sana' => $ssana]);
+                    $itcena = $itcena + $tarif_cena[0]->cn;
+
+                    //$ssana = strtotime($sana_bg);
+
+                    //$ssana->modify('first day of this month');
+                    //ddd($ssana);
+                    $xmonth = $xmonth + 1;
+//                    $time = strtotime("2010.12.11");
+//                    $final = date("Y-m-d", strtotime("+1 month", $time));
+//                  $cena = DB::select('SELECT distinct get_cena(:sid,:sana) as cn FROM services', ['sid' => $sid, 'sana' => $sana_bg]);
+                }
+
+                //ddd($itcena);
+
+
+            }
+            $usluga = new Usluganach(array(
+                'abonent_id' => $request->get('ab_id'),
+                'service_id' => $request->get('item_id'),
+                'sana_begin' => $request->get('sana_begin'),
+                'cena' => $itcena,
+                'doc_sana' => $request->get('doc_sana'),
+                'doc_nomer' => $request->get('doc_nomer'),
+                'is_active' => 1,
+                'user_id' => Auth::id(),
+                'period' => $period->tekoy
+            ));
+            $usluga->save();
         }
-
-
-
 
         $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
         select('abonent.*', 'street.street_name')->
