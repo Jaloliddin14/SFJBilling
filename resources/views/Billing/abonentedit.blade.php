@@ -30,6 +30,7 @@
                         </div>
 
                         <input type="hidden" name="ab_id" value="{{$abonents->id}}">
+                        <input type="hidden" name="slug" value="{{$abonents->slug}}">
 
                         <div class="form-row">
                             <div class="form-group col-md-3">

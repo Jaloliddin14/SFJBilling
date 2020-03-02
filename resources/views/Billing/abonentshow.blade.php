@@ -132,6 +132,8 @@
                                     <th class="th-sm">Услуга</th>
                                     <th class="th-sm">Цена</th>
                                     <th class="th-sm">Пользователь</th>
+                                    <th class="th-sm">Действие</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -148,6 +150,13 @@
                                             <td>{{ $usl->service_name }} </td>
                                             <th>{{ $usl->cena }} </th>
                                             <td>{{ $usl->name }} </td>
+                                            <th>
+                                                @if($usl->monthly==1 && $usl->sana_end==null)
+                                                <a href="{{action('UslugaController@edit',$usl->id)}}"
+                                                   class="btn btn-info btn-sm">Снять</a>
+                                                    @else
+                                                @endif
+                                            </th>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -224,7 +233,7 @@
                             <table class="table table-hover">
                                 <thead class="thead-light">
                                 <tr>
-                                    <th class="th-sm">Сальдо на начало </th>
+                                    <th class="th-sm">Сальдо на начало</th>
                                     <th class="th-sm">Начисление услуг</th>
                                     <th class="th-sm">Поступление</th>
                                     <th class="th-sm">Сальдо на конец</th>

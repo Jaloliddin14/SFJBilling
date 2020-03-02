@@ -1,7 +1,11 @@
+<?php
+    use App\Http\Controllers\ConfController;
+    $tekoy = ConfController::getekoy();
+?>
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+            SFJBilling
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -38,11 +42,32 @@
                     </div>
                 </li>
 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Отчеты
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/saldooborot">Сальдо оборот</a>
+                        <a class="dropdown-item" href="#">#</a>
+                        <a class="dropdown-item" href="/#">#</a>
+                        <a class="dropdown-item" href="/#">#</a>
+                        <a class="dropdown-item" href="/#">#</a>
+                        <a class="dropdown-item" href="/#">#</a>
+                        <a class="dropdown-item" href="/#">#</a>
+                    </div>
+                </li>
 
-                <a class="nav-link" href="/">Отчеты</a>
                 <a class="nav-link" href="/">Настройки</a>
-            </ul>
 
+            </ul>
+            <ul class="navbar-nav mr-sm-auto">
+                <li class="nav-item">
+                   Текущий отчетный месяц :   <strong style="color: red">
+                        {{date_format( new DateTime($tekoy), 'F - Y' )}}
+                    </strong>
+                </li>
+            </ul>
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->

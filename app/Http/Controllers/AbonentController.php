@@ -26,6 +26,7 @@ class AbonentController extends Controller
     {
         $query = Mabonent::query();
 
+
         if ($request->get('abonent_id') != '') $query = $query->where('id', $request->get('abonent_id'));
         if ($request->get('pass_fio') != '') $query = $query->where('pass_fio', 'like', '%' . $request->get('pass_fio') . '%');
         if ($request->get('phone') != '') $query = $query->where('phone', 'like', '%' . $request->get('phone') . '%');
@@ -98,10 +99,82 @@ class AbonentController extends Controller
      */
     public function show($slug)
     {
-//        $abonents = Mabonent::whereSlug($slug)->first();
-
         $period = DB::table('syssana')->first('tekoy');
 
+        $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
+        select('abonent.*', 'street.street_name')->
+        where('slug', $slug)->first();
+
+        $abonent_id = $abonents->id;
+
+        $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
+        join('users', 'user_id', 'users.id')->
+        select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
+        where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
+
+        $uslugi = DB::table('service_nach')->
+        join('services', 'service_id', 'services.id')->
+        join('users', 'user_id', 'users.id')->
+        select('service_nach.*', 'users.name', 'services.service_name','services.monthly')->
+        where('abonent_id', $abonent_id)->where('period',$period->tekoy)->
+        orderByDesc('id')->get();
+        //ddd($uslugi);
+        $syssana = DB::table('syssana')->first('tekoy');
+
+        $payment = DB::table('payment')->where('abonent_id', $abonent_id)
+            ->where('period', $syssana->tekoy)->first();
+
+        $payments = DB::table('payment')->where('abonent_id', $abonent_id)->get();
+
+        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi','payment','payments'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request)
+    {
+        $abonent_id = $request->get('ab_id');
+        $abonents = Mabonent::whereId($abonent_id)->first();
+        $street = Streets::all();
+        return view('Billing.abonentedit', compact('abonents', 'street'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $abonent_id = $request->get('ab_id');
+        $slug = $request->get('slug');
+        $ab = Mabonent::whereId($abonent_id)->first();
+        $ab->pass_fio = $request->get('pass_fio');
+        $ab->pass_seriya = $request->get('pass_seriya');
+        $ab->pass_nomer = $request->get('pass_nomer');
+        $ab->pass_iib = $request->get('pass_iib');
+        $ab->pass_sana_birth = $request->get('pass_sana_birth');
+        $ab->pass_sana_get = $request->get('pass_sana_get');
+        $ab->pass_sana_exp = $request->get('pass_sana_exp');
+        $ab->add_street_id = $request->get('add_street_id');
+        $ab->add_dom = $request->get('add_dom');
+        $ab->add_korpus = $request->get('add_korpus');
+        $ab->add_podyezd = $request->get('add_podyezd');
+        $ab->add_kvartira = $request->get('add_kvartira');
+        $ab->sana_add = $request->get('dogovor_sana');
+        $ab->dogovor_sana = $request->get('dogovor_sana');
+        $ab->dogovor_nomer = $request->get('dogovor_nomer');
+        $ab->phone = $request->get('phone');
+        $ab->email = $request->get('email');
+        $ab->save();
+
+        $period = DB::table('syssana')->first('tekoy');
         $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
         select('abonent.*', 'street.street_name')->
         where('slug', $slug)->first();
@@ -127,72 +200,6 @@ class AbonentController extends Controller
         $payments = DB::table('payment')->where('abonent_id', $abonent_id)->get();
 
         return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi','payment','payments'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request)
-    {
-//        ddd($request);
-
-        $abonent_id = $request->get('ab_id');
-        $abonents = Mabonent::whereId($abonent_id)->first();
-        $street = Streets::all();
-        return view('Billing.abonentedit', compact('abonents', 'street'));
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
-    {
-        $abonent_id = $request->get('ab_id');
-
-        $ab = Mabonent::whereId($abonent_id)->first();
-        $ab->pass_fio = $request->get('pass_fio');
-        $ab->pass_seriya = $request->get('pass_seriya');
-        $ab->pass_nomer = $request->get('pass_nomer');
-        $ab->pass_iib = $request->get('pass_iib');
-        $ab->pass_sana_birth = $request->get('pass_sana_birth');
-        $ab->pass_sana_get = $request->get('pass_sana_get');
-        $ab->pass_sana_exp = $request->get('pass_sana_exp');
-        $ab->add_street_id = $request->get('add_street_id');
-        $ab->add_dom = $request->get('add_dom');
-        $ab->add_korpus = $request->get('add_korpus');
-        $ab->add_podyezd = $request->get('add_podyezd');
-        $ab->add_kvartira = $request->get('add_kvartira');
-        $ab->sana_add = $request->get('dogovor_sana');
-        $ab->dogovor_sana = $request->get('dogovor_sana');
-        $ab->dogovor_nomer = $request->get('dogovor_nomer');
-        $ab->phone = $request->get('phone');
-        $ab->email = $request->get('email');
-        $ab->save();
-
-        $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
-        select('abonent.*', 'street.street_name')->
-        where('abonent_id', $abonent_id)->first();
-
-        $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
-        join('users', 'user_id', 'users.id')->
-        select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
-        where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
-
-        $uslugi = DB::table('service_nach')->
-        join('services', 'service_id', 'services.id')->
-        join('users', 'user_id', 'users.id')->
-        select('service_nach.*', 'users.name', 'services.service_name')->
-        where('abonent_id', $abonent_id)->orderByDesc('id')->get();
-
-        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
 
     }
 
@@ -226,4 +233,10 @@ class AbonentController extends Controller
         return view('Billing.test', compact('abonents'));
     }
 
-}
+    public static function getekoy()
+    {
+        $period = DB::table('syssana')->first('tekoy');
+        return $period->tekoy;
+    }
+
+    }

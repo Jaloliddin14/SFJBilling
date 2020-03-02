@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mabonent;
 use App\Services;
+use App\Streets;
 use App\Usluganach;
 use Auth;
 use Illuminate\Http\Request;
@@ -68,13 +69,14 @@ class UslugaController extends Controller
             if ($cena_dinamic) {
                 $cena = $request->get('cena');
             } else {
-                $cena = DB::select('SELECT distinct get_cena(:sid,:sana) as cn FROM services', ['sid' => $sid, 'sana' => $sana_bg]);
+                $cena1 = DB::select('SELECT distinct get_cena(:sid,:sana) as cn FROM services', ['sid' => $sid, 'sana' => $sana_bg]);
+                $cena = $cena1[0]->cn;
             }
             $usluga = new Usluganach(array(
                 'abonent_id' => $request->get('ab_id'),
                 'service_id' => $request->get('item_id'),
                 'sana_begin' => $request->get('sana_begin'),
-                'cena' => $cena[0]->cn,
+                'cena' => $cena,
                 'doc_sana' => $request->get('doc_sana'),
                 'doc_nomer' => $request->get('doc_nomer'),
                 'is_active' => 1,
@@ -100,8 +102,8 @@ class UslugaController extends Controller
                     //ddd($itcena);
                 } else {
 
-                    $firs_day = strtotime($ssana);
-                    $ssana = date("Y-m-d", strtotime("+1 month", $firs_day));
+
+                    $ssana = date("Y-m-d", strtotime("+1 month", strtotime($ssana)));
                     $tarif_cena = DB::select('SELECT distinct get_cena(:sid,:sana) as cn FROM services', ['sid' => $sid, 'sana' => $ssana]);
                     $itcena = $itcena + $tarif_cena[0]->cn;
 
@@ -133,9 +135,13 @@ class UslugaController extends Controller
             $usluga->save();
         }
 
+
+        $abon_id = Mabonent::whereId($request->get('ab_id'))->first();
         $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
         select('abonent.*', 'street.street_name')->
-        where('slug', $request->get('slug'))->first();
+        where('slug', $abon_id->slug)->first();
+
+        $abonent_id = $abonents->id;
 
         $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
         join('users', 'user_id', 'users.id')->
@@ -146,9 +152,16 @@ class UslugaController extends Controller
         join('services', 'service_id', 'services.id')->
         join('users', 'user_id', 'users.id')->
         select('service_nach.*', 'users.name', 'services.service_name')->
-        where('abonent_id', $abonent_id)->orderByDesc('id')->get();
+        where('abonent_id', $abonent_id)->where('period', $period->tekoy)->
+        orderByDesc('id')->get();
+        $syssana = DB::table('syssana')->first('tekoy');
 
-        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi'));
+        $payment = DB::table('payment')->where('abonent_id', $abonent_id)
+            ->where('period', $syssana->tekoy)->first();
+
+        $payments = DB::table('payment')->where('abonent_id', $abonent_id)->get();
+
+        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi', 'payment', 'payments'));
 
     }
 
@@ -171,7 +184,15 @@ class UslugaController extends Controller
      */
     public function edit($id)
     {
-        //
+        //$usl = Usluganach::where('id',$id)->get();
+        $usl = DB::table('service_nach')->
+        join('services', 'service_id', 'services.id')->
+        join('abonent', 'abonent_id', 'abonent.id')->
+        select('service_nach.*', 'abonent.pass_fio', 'services.service_name')->
+        where('service_nach.id', $id)->orderByDesc('id')->first();
+
+        //ddd($uslugi);
+        return view('Billing.endusluga', compact('usl'));
     }
 
     /**
@@ -181,9 +202,59 @@ class UslugaController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $sid = $request->get('sid');
+        $syssana = DB::table('syssana')->first('tekoy');
+        $sana_begin_month = $syssana->tekoy;
+        $sana_end_month = date("Y-m-d", strtotime("+1 month", strtotime($sana_begin_month)));
+        $sana_end = $request->get('sana_end');
+        if ($sana_begin_month > $sana_end && $sana_end_month < $sana_end) {
+            ddd($sana_end);
+        }
+        $month_days = cal_days_in_month(CAL_GREGORIAN, getdate(strtotime($sana_begin_month))['mon'], getdate(strtotime($sana_begin_month))['year']);
+        $itdays = getdate(strtotime($sana_end))['mday'];
+
+        $tarif_cena = DB::select('SELECT distinct get_cena(:sid,:sana) as cn FROM services', ['sid' => $sid, 'sana' => $sana_end]);
+        $itcena = ($tarif_cena[0]->cn / $month_days) * $itdays;
+
+        //ddd($request->get('id'));
+        $updateusl = Usluganach::whereId($request->get('id'))->first();
+        $updateusl->sana_end = $sana_end;
+        $updateusl->cena = $itcena;
+        $updateusl->save();
+
+
+        $period = DB::table('syssana')->first('tekoy');
+
+        $abon_id = Mabonent::whereId($request->get('ab_id'))->first();
+        $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
+        select('abonent.*', 'street.street_name')->
+        where('slug', $abon_id->slug)->first();
+
+        $abonent_id = $abonents->id;
+
+        $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
+        join('users', 'user_id', 'users.id')->
+        select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
+        where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
+
+        $uslugi = DB::table('service_nach')->
+        join('services', 'service_id', 'services.id')->
+        join('users', 'user_id', 'users.id')->
+        select('service_nach.*', 'users.name', 'services.service_name')->
+        where('abonent_id', $abonent_id)->where('period', $period->tekoy)->
+        orderByDesc('id')->get();
+        $syssana = DB::table('syssana')->first('tekoy');
+
+        $payment = DB::table('payment')->where('abonent_id', $abonent_id)
+            ->where('period', $syssana->tekoy)->first();
+
+        $payments = DB::table('payment')->where('abonent_id', $abonent_id)->get();
+
+        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi', 'payment', 'payments'));
+
+
     }
 
     /**

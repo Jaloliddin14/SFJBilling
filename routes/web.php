@@ -31,6 +31,9 @@ Route::post('/addoplatacreate','OplataController@store');
 
 Route::post('/addusluga','UslugaController@index');
 Route::post('/adduslugacreate','UslugaController@store');
+Route::get('/closeusluga/{id}/close','UslugaController@edit');
+Route::post('/docloseusluga','UslugaController@update');
+
 
 Route::get('/createstreettip','SettingsController@streettipcreateindex');
 Route::post('/addstreettip','SettingsController@addstreettip');
@@ -64,3 +67,5 @@ Route::post('/updateusers','SettingsController@updateusers');
 Route::get('/closemonthpage','SettingsController@closemonthpage');
 Route::post('/closemonthfunc','SettingsController@closemonthfunc');
 
+Route::get('/saldooborot', function () { return view('Billing.reports.saldooborot',['payments'=>collect()]);});
+Route::post('/saldooborotget','ReportsController@getsaldooborot');
