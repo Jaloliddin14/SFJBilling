@@ -90,6 +90,7 @@
                     </table>
 
                     <div class="card-body">
+
                         <form method="post" action="/excelsaldooborotget">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="periodex" value="{{ $periodex }}">

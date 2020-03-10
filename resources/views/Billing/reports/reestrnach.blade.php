@@ -9,11 +9,11 @@
     <div class="container col-md-8 col-md-offset-2">
         <div class="card mt-5">
             <div class="card-header ">
-                <h5 class="float-left">Отчет Сальдо</h5>
+                <h5 class="float-left">Отчет Начислений</h5>
                 <div class="clearfix"></div>
             </div>
             <div class="card-body mt-2">
-                <form method="post" action="/saldooborotget">
+                <form method="post" action="/reestrnachget">
                     @foreach ($errors->all() as $error)
                         <p class="alert alert-danger">{{ $error }}</p>
                     @endforeach
@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label for="period" class="col-lg-10 control-label">Период отчета</label>
                             <div class="col-lg-auto">
-                                <select class="form-control" name="period" id="period">
+                                <select class="form-control" name="period" id="period" >
                                     @foreach($period as $item)
                                         <option value="{{$item->period}}">{{$item->period}}</option>
                                     @endforeach
@@ -56,12 +56,9 @@
                         <tr>
                             <th class="th-sm">№</th>
                             <th class="th-sm">№ Счета</th>
-                            <th class="th-sm">Ф. И. О.</th>
-                            <th class="th-sm">Сальдо на начало</th>
+                            <th class="th-sm">Ф.И.О. Абонента</th>
+                            <th class="th-sm">Услуга</th>
                             <th class="th-sm">Начисление</th>
-                            <th class="th-sm">Поступление</th>
-                            <th class="th-sm">Сальдо на конец</th>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -73,12 +70,10 @@
                             @foreach($payments as $item)
                                 <tr>
                                     <td>{{ $nr }} </td>
-                                    <td>{{ $item->id }} </td>
+                                    <td>{{ $item->abonent_id }} </td>
                                     <td>{{ $item->pass_fio }} </td>
-                                    <td>{{ $item->saldo_begin }} </td>
-                                    <td>{{ $item->service_nach }} </td>
-                                    <td>{{ $item->oplata }} </td>
-                                    <td>{{ $item->saldo_end }} </td>
+                                    <td>{{ $item->service_name }} </td>
+                                    <td>{{ $item->cena }} </td>
                                 </tr>
                                 <?php
                                 $nr = $nr + 1
@@ -90,7 +85,8 @@
                     </table>
 
                     <div class="card-body">
-                        <form method="post" action="/excelsaldooborotget">
+
+                        <form method="post" action="/excelreestrnachget">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="periodex" value="{{ $periodex }}">
                             <fieldset>

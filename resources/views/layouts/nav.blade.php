@@ -1,6 +1,8 @@
 <?php
-    use App\Http\Controllers\ConfController;
-    $tekoy = ConfController::getekoy();
+
+use App\Http\Controllers\ConfController;
+
+$tekoy = ConfController::getekoy();
 ?>
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
@@ -49,12 +51,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/saldooborot">Сальдо оборот</a>
-                        <a class="dropdown-item" href="#">#</a>
-                        <a class="dropdown-item" href="/#">#</a>
-                        <a class="dropdown-item" href="/#">#</a>
-                        <a class="dropdown-item" href="/#">#</a>
-                        <a class="dropdown-item" href="/#">#</a>
-                        <a class="dropdown-item" href="/#">#</a>
+                        <a class="dropdown-item" href="/reestroplat">Реестр оплат</a>
+                        <a class="dropdown-item" href="/reestrnach">Реестр начислений</a>
+                        <a class="dropdown-item" href="/postupleniye">Поступления</a>
+                        <a class="dropdown-item" href="/nachisleniye">Начисленпия</a>
                     </div>
                 </li>
 
@@ -63,7 +63,7 @@
             </ul>
             <ul class="navbar-nav mr-sm-auto">
                 <li class="nav-item">
-                   Текущий отчетный месяц :   <strong style="color: red">
+                    Текущий отчетный месяц : <strong style="color: red">
                         {{date_format( new DateTime($tekoy), 'F - Y' )}}
                     </strong>
                 </li>

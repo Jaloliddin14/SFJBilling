@@ -67,5 +67,22 @@ Route::post('/updateusers','SettingsController@updateusers');
 Route::get('/closemonthpage','SettingsController@closemonthpage');
 Route::post('/closemonthfunc','SettingsController@closemonthfunc');
 
-Route::get('/saldooborot', function () { return view('Billing.reports.saldooborot',['payments'=>collect()]);});
+Route::get('/saldooborot', function () { return view('Billing.reports.saldooborot',['payments'=>collect(),'periodex'=>collect()]);});
 Route::post('/saldooborotget','ReportsController@getsaldooborot');
+Route::post('/excelsaldooborotget','ReportsController@getexcelsaldooborot');
+
+Route::get('/reestroplat', function () { return view('Billing.reports.reestroplat',['oplata'=>collect(),'periodot'=>collect(),'perioddo'=>collect()]);});
+Route::post('/reestroplatget','ReportsController@getreestroplat');
+Route::post('/excelreestroplatget','ReportsController@getexcelreestroplat');
+
+Route::get('/reestrnach', function () { return view('Billing.reports.reestrnach',['payments'=>collect(),'periodex'=>collect()]);});
+Route::post('/reestrnachget','ReportsController@getreestrnach');
+Route::post('/excelreestrnachget','ReportsController@getexcelreestrnach');
+
+Route::get('/postupleniye', function () { return view('Billing.reports.postupleniye',['payments'=>collect(),'periodex'=>collect()]);});
+Route::post('/postupleniyeget','ReportsController@getpostupleniye');
+Route::post('/excelpostupleniyeget','ReportsController@getexcelpostupleniye');
+
+Route::get('/nachisleniye', function () { return view('Billing.reports.nachisleniye',['payments'=>collect(),'periodex'=>collect()]);});
+Route::post('/nachisleniyeget','ReportsController@getnachisleniye');
+Route::post('/excelnachisleniyeget','ReportsController@getexcelnachisleniye');
