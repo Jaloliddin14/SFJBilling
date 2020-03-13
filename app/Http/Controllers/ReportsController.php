@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\NachisleniyeOtchetExport;
+use App\Exports\PostupleniyeOtchetExport;
 use App\Exports\ReestrnachOtchetExport;
 use App\Exports\ReestroplatOtchetExport;
 use Illuminate\Http\Request;
@@ -74,40 +76,44 @@ class ReportsController extends Controller
         return Excel::download(new ReestrnachOtchetExport($request->periodex), 'ReestNachisleniy.xlsx');
     }
 
-    //44///////////////////////////////////////////////////////////////////////////////////////////////////
-    public static function getpostupleniye(Request $request)
-    {
-
-        $payments = DB::table('payment')->join('abonent', 'abonent_id', 'abonent.id')->
-        select('payment.*', 'abonent.pass_fio')->
-        where('period', $request->period)->orderByDesc('pass_fio')->get();
-        //ddd($payments);
-        $periodex = $request->period;
-
-        return view('Billing.reports.saldooborot', compact('payments', 'periodex'));
-    }
-
-    public static function getexcelpostupleniye(Request $request)
-    {
-        return Excel::download(new OtchetExport($request->periodex), 'Saldooborot.xlsx');
-    }
-
-    //55///////////////////////////////////////////////////////////////////////////////////////////////////
+    //44///////////////////////////////////////////////////////////////////////////////////////////////////+
     public static function getnachisleniye(Request $request)
     {
 
-        $payments = DB::table('payment')->join('abonent', 'abonent_id', 'abonent.id')->
-        select('payment.*', 'abonent.pass_fio')->
-        where('period', $request->period)->orderByDesc('pass_fio')->get();
+        $payments = DB::table('service_nach')->
+        join('services', 'service_id', 'services.id')->
+        select('service_nach.period','services.service_name', DB::raw('sum(service_nach.cena) as cena'))->
+        where('period', $request->period)->groupBy('service_nach.period','services.service_name')->
+        orderByDesc('services.service_name')->get();
         //ddd($payments);
         $periodex = $request->period;
 
-        return view('Billing.reports.saldooborot', compact('payments', 'periodex'));
+        return view('Billing.reports.nachisleniye', compact('payments', 'periodex'));
     }
 
     public static function getexcelnachisleniye(Request $request)
     {
-        return Excel::download(new OtchetExport($request->periodex), 'Saldooborot.xlsx');
+        return Excel::download(new NachisleniyeOtchetExport($request->periodex), 'NachisleniyeOtchet.xlsx');
+    }
+
+    //55///////////////////////////////////////////////////////////////////////////////////////////////////
+    public static function getpostupleniye(Request $request)
+    {
+
+        $payments = DB::table('oplati')->
+        join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
+        select('oplati.period','oplata_tip.oplata_tip_name', DB::raw('sum(oplati.oplata) as oplata'))->
+        where('period', $request->period)->groupBy('oplati.period','oplata_tip.oplata_tip_name')->
+        orderByDesc('oplata_tip.oplata_tip_name')->get();
+        //ddd($payments);
+        $periodex = $request->period;
+
+        return view('Billing.reports.postupleniye', compact('payments', 'periodex'));
+    }
+
+    public static function getexcelpostupleniye(Request $request)
+    {
+        return Excel::download(new PostupleniyeOtchetExport($request->periodex), 'PostupleniyeOtchet.xlsx');
     }
 
 

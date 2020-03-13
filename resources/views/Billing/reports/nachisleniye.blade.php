@@ -13,7 +13,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body mt-2">
-                <form method="post" action="/postupleniyeget">
+                <form method="post" action="/nachisleniyeget">
                     @foreach ($errors->all() as $error)
                         <p class="alert alert-danger">{{ $error }}</p>
                     @endforeach
@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label for="period" class="col-lg-10 control-label">Период отчета</label>
                             <div class="col-lg-auto">
-                                <select class="form-control" name="period" id="period" >
+                                <select class="form-control" name="period" id="period">
                                     @foreach($period as $item)
                                         <option value="{{$item->period}}">{{$item->period}}</option>
                                     @endforeach
@@ -69,8 +69,7 @@
                             @foreach($payments as $item)
                                 <tr>
                                     <td>{{ $nr }} </td>
-                                    <td>{{ $item->abonent_id }} </td>
-                                    <td>{{ $item->pass_fio }} </td>
+                                    <td>{{ $item->period }} </td>
                                     <td>{{ $item->service_name }} </td>
                                     <td>{{ $item->cena }} </td>
                                 </tr>
@@ -85,7 +84,7 @@
 
                     <div class="card-body">
 
-                        <form method="post" action="/excelpostupleniyeget">
+                        <form method="post" action="/excelnachisleniyeget">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="periodex" value="{{ $periodex }}">
                             <fieldset>
