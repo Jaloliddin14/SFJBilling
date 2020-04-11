@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\AbonentFormRequest;
 use App\Mabonent;
-use App\Oplata;
+
+
 
 class AbonentController extends Controller
 {
@@ -99,8 +100,8 @@ class AbonentController extends Controller
      */
     public function show($slug)
     {
-        $period = DB::table('syssana')->first('tekoy');
-
+        //$period = DB::table('syssana')->first('tekoy');
+        //$period =DataDB::pe
         $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
         select('abonent.*', 'street.street_name')->
         where('slug', $slug)->first();

@@ -151,9 +151,10 @@ class UslugaController extends Controller
         $uslugi = DB::table('service_nach')->
         join('services', 'service_id', 'services.id')->
         join('users', 'user_id', 'users.id')->
-        select('service_nach.*', 'users.name', 'services.service_name')->
-        where('abonent_id', $abonent_id)->where('period', $period->tekoy)->
+        select('service_nach.*', 'users.name', 'services.service_name','services.monthly')->
+        where('abonent_id', $abonent_id)->where('period',$period->tekoy)->
         orderByDesc('id')->get();
+
         $syssana = DB::table('syssana')->first('tekoy');
 
         $payment = DB::table('payment')->where('abonent_id', $abonent_id)
