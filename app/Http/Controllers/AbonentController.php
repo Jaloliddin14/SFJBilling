@@ -6,7 +6,9 @@ use App\Streets;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\AbonentFormRequest;
+use App\Helpers\DataDB;
 use App\Mabonent;
+
 
 
 
@@ -100,32 +102,11 @@ class AbonentController extends Controller
      */
     public function show($slug)
     {
-        //$period = DB::table('syssana')->first('tekoy');
-        //$period =DataDB::pe
-        $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
-        select('abonent.*', 'street.street_name')->
-        where('slug', $slug)->first();
-
-        $abonent_id = $abonents->id;
-
-        $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
-        join('users', 'user_id', 'users.id')->
-        select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
-        where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
-
-        $uslugi = DB::table('service_nach')->
-        join('services', 'service_id', 'services.id')->
-        join('users', 'user_id', 'users.id')->
-        select('service_nach.*', 'users.name', 'services.service_name','services.monthly')->
-        where('abonent_id', $abonent_id)->where('period',$period->tekoy)->
-        orderByDesc('id')->get();
-        //ddd($uslugi);
-        $syssana = DB::table('syssana')->first('tekoy');
-
-        $payment = DB::table('payment')->where('abonent_id', $abonent_id)
-            ->where('period', $syssana->tekoy)->first();
-
-        $payments = DB::table('payment')->where('abonent_id', $abonent_id)->get();
+        $abonents = DataDB::abonents($slug);
+        $oplati = DataDB::oplati($abonents->id);
+        $uslugi = DataDB::uslugi($abonents->id);
+        $payment = DataDB::payment($abonents->id);
+        $payments = DataDB::payments($abonents->id);
 
         return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi','payment','payments'));
     }
@@ -175,30 +156,11 @@ class AbonentController extends Controller
         $ab->email = $request->get('email');
         $ab->save();
 
-        $period = DB::table('syssana')->first('tekoy');
-        $abonents = DB::table('abonent')->join('street', 'add_street_id', 'street.id')->
-        select('abonent.*', 'street.street_name')->
-        where('slug', $slug)->first();
-
-        $abonent_id = $abonents->id;
-
-        $oplati = DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->
-        join('users', 'user_id', 'users.id')->
-        select('oplati.*', 'oplata_tip.oplata_tip_name', 'users.name')->
-        where('abonent_id', $abonent_id)->orderByDesc('sana_add')->get();
-
-        $uslugi = DB::table('service_nach')->
-        join('services', 'service_id', 'services.id')->
-        join('users', 'user_id', 'users.id')->
-        select('service_nach.*', 'users.name', 'services.service_name')->
-        where('abonent_id', $abonent_id)->where('period',$period->tekoy)->
-        orderByDesc('id')->get();
-        $syssana = DB::table('syssana')->first('tekoy');
-
-        $payment = DB::table('payment')->where('abonent_id', $abonent_id)
-            ->where('period', $syssana->tekoy)->first();
-
-        $payments = DB::table('payment')->where('abonent_id', $abonent_id)->get();
+        $abonents = DataDB::abonents($slug);
+        $oplati = DataDB::oplati($abonents->id);
+        $uslugi = DataDB::uslugi($abonents->id);
+        $payment = DataDB::payment($abonents->id);
+        $payments = DataDB::payments($abonents->id);
 
         return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi','payment','payments'));
 
@@ -234,10 +196,5 @@ class AbonentController extends Controller
         return view('Billing.test', compact('abonents'));
     }
 
-    public static function getekoy()
-    {
-        $period = DB::table('syssana')->first('tekoy');
-        return $period->tekoy;
-    }
 
     }
