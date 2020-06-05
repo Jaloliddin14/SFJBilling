@@ -24,7 +24,7 @@
 
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">Логин</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">Фамилия Имя Отчество</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
@@ -118,6 +118,8 @@
                                     <th>
                                         <a href="{{action('SettingsController@editusers',$stt->id)}}"
                                            class="btn btn-info btn-sm">Редактировать</a>
+                                        <a href="{{action('SettingsController@editusersrole',$stt->id)}}"
+                                           class="btn btn-warning btn-sm">Роли</a>
                                     </th>
                                 </tr>
                             @endforeach

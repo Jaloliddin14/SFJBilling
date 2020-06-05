@@ -4,7 +4,7 @@
     <div class="container col-md-8 col-md-offset-2">
         <div class="card mt-5">
             <div class="card-header ">
-                <h5 class="float-left">Изменить тип адреса</h5>
+                <h5 class="float-left">Редактирование пользователя</h5>
                 <div class="clearfix"></div>
             </div>
             <div class="card-body mt-2">
@@ -23,7 +23,7 @@
 
                     <fieldset>
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">Логин</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">Фамилия Имя Отчество</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"

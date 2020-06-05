@@ -24,25 +24,37 @@ $tekoy = ConfController::getekoy();
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/">Поиск абонента</a>
-                        <a class="dropdown-item" href="/createabonent">Новый абонент</a>
+                        @can('new-abonent')
+                            <a class="dropdown-item" href="/createabonent">Новый абонент</a>
+                        @endcan
                     </div>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        Настройки
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="/createstreettip">Тип адреса</a>
-                        <a class="dropdown-item" href="/createstreet">Улицы</a>
-                        <a class="dropdown-item" href="/createservice">Услуги</a>
-                        <a class="dropdown-item" href="/createservicecena">Цена услуги</a>
-                        <a class="dropdown-item" href="/createoplatatip">Тип оплаты</a>
-                        <a class="dropdown-item" href="/createusers">Пользователи</a>
-                        <a class="dropdown-item" href="/closemonthpage">Закрытие месяца</a>
-                    </div>
-                </li>
+                @can('nastroyki')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Настройки
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/createstreettip">Тип адреса</a>
+                            <a class="dropdown-item" href="/createstreet">Улицы</a>
+                            @can('nastroyki-uslugi')
+                                <a class="dropdown-item" href="/createservice">Услуги</a>
+                            @endcan
+                            @can('nastroyki-cena_uslugi')
+                                <a class="dropdown-item" href="/createservicecena">Цена услуги</a>
+                            @endcan
+                            <a class="dropdown-item" href="/createoplatatip">Тип оплаты</a>
+                            @can('nastroyki-users')
+                                <a class="dropdown-item" href="/createusers">Пользователи</a>
+                            @endcan
+                            @can('nastroyki-close_month')
+                                <a class="dropdown-item" href="/closemonthpage">Закрытие месяца</a>
+                            @endcan
+                        </div>
+                    </li>
+                @endcan
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -50,15 +62,19 @@ $tekoy = ConfController::getekoy();
                         Отчеты
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="/saldooborot">Сальдо оборот</a>
+                        @can('otcheti')
+                            <a class="dropdown-item" href="/saldooborot">Сальдо оборот</a>
+                        @endcan
                         <a class="dropdown-item" href="/reestroplat">Реестр оплат</a>
-                        <a class="dropdown-item" href="/reestrnach">Реестр начислений</a>
-                        <a class="dropdown-item" href="/postupleniye">Поступления</a>
-                        <a class="dropdown-item" href="/nachisleniye">Начисленпия</a>
+                        @can('otcheti')
+                            <a class="dropdown-item" href="/reestrnach">Реестр начислений</a>
+                            <a class="dropdown-item" href="/postupleniye">Поступления</a>
+                            <a class="dropdown-item" href="/nachisleniye">Начисленпия</a>
+                        @endcan
                     </div>
                 </li>
 
-                <a class="nav-link" href="/">Настройки</a>
+
 
             </ul>
             <ul class="navbar-nav mr-sm-auto">

@@ -7,12 +7,14 @@ use App\ServiceCena;
 use App\Services;
 use App\Streets;
 use App\TipOplat;
+use App\User;
 use App\Users;
 use Illuminate\Http\Request;
 use App\StreetTip;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class SettingsController extends Controller
 {
@@ -340,6 +342,32 @@ class SettingsController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////// Роли пользователя /////////////////////////////////////
+
+    public function editusersrole($id)
+    {
+        $usrs = Users::where('id', $id)->first();
+        $user =User::query()->find($id);
+        $roles = $user->getRoleNames();
+        //ddd($roles);
+        return view('Billing.editsettings.userrole', compact('usrs','roles'));
+    }
+
+    public function updateusersrole(Request $request)
+    {
+        //ddd($request);
+        $user =User::query()->find($request->id);
+        if ($request->has('admin')){$user->assignRole('Admin');} else{$user->removeRole('Admin');}
+        if ($request->has('manager')){$user->assignRole('Manager');} else{$user->removeRole('Manager');}
+        if ($request->has('cashier')){$user->assignRole('Cashier');} else{$user->removeRole('Cashier');}
+        $usrs = Users::all();
+        return view('Billing.editsettings.userregister', compact('usrs'));
+
+    }
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 

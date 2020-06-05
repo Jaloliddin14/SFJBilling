@@ -86,3 +86,6 @@ Route::post('/excelpostupleniyeget','ReportsController@getexcelpostupleniye');
 Route::get('/nachisleniye', function () { return view('Billing.reports.nachisleniye',['payments'=>collect(),'periodex'=>collect()]);});
 Route::post('/nachisleniyeget','ReportsController@getnachisleniye');
 Route::post('/excelnachisleniyeget','ReportsController@getexcelnachisleniye');
+
+Route::get('/editrole/{id}/editrole','SettingsController@editusersrole');
+Route::post('/updateusersrole','SettingsController@updateusersrole');

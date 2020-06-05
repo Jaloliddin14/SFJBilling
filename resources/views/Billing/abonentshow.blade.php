@@ -77,28 +77,33 @@
                     </div>
                 </div>
                 <div class="row">
-
-                    <div class="col-sm-2 ">
-                        <form method="post" action="/addusluga">
-                            <input type="hidden" name="ab_id" value="{{$abonents->id}}">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="submit" class="btn btn-primary btn-block" value="Установка услуги">
-                        </form>
-                    </div>
-                    <div class="col-sm-2">
-                        <form method="post" action="/addoplata">
-                            <input type="hidden" name="ab_id" value="{{$abonents->id}}">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="submit" class="btn btn-primary btn-block" value="Прием оплаты">
-                        </form>
-                    </div>
-                    <div class="col-sm-2">
-                        <form method="post" action="/editabonent">
-                            <input type="hidden" name="ab_id" value="{{$abonents->id}}">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="submit" class="btn btn-primary btn-block" value="Редактировать">
-                        </form>
-                    </div>
+                    @can('abonent-add_uslugi')
+                        <div class="col-sm-2 ">
+                            <form method="post" action="/addusluga">
+                                <input type="hidden" name="ab_id" value="{{$abonents->id}}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="submit" class="btn btn-primary btn-block" value="Установка услуги">
+                            </form>
+                        </div>
+                    @endcan
+                    @can('abonent-oplata')
+                        <div class="col-sm-2">
+                            <form method="post" action="/addoplata">
+                                <input type="hidden" name="ab_id" value="{{$abonents->id}}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="submit" class="btn btn-primary btn-block" value="Прием оплаты">
+                            </form>
+                        </div>
+                    @endcan
+                    @can('abonent-edit')
+                        <div class="col-sm-2">
+                            <form method="post" action="/editabonent">
+                                <input type="hidden" name="ab_id" value="{{$abonents->id}}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="submit" class="btn btn-primary btn-block" value="Редактировать">
+                            </form>
+                        </div>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -151,11 +156,13 @@
                                             <th>{{ $usl->cena }} </th>
                                             <td>{{ $usl->name }} </td>
                                             <th>
-                                                @if($usl->monthly==1 && $usl->sana_end==null)
-                                                <a href="{{action('UslugaController@edit',$usl->id)}}"
-                                                   class="btn btn-info btn-sm">Снять</a>
+                                                @can('abonent-actions')
+                                                    @if($usl->monthly==1 && $usl->sana_end==null)
+                                                        <a href="{{action('UslugaController@edit',$usl->id)}}"
+                                                           class="btn btn-info btn-sm">Снять</a>
                                                     @else
-                                                @endif
+                                                    @endif
+                                                @endcan
                                             </th>
                                         </tr>
                                     @endforeach
