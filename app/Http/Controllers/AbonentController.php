@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Streets;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\AbonentFormRequest;
 use App\Helpers\DataDB;
 use App\Mabonent;
-use App\User;
-
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-
-
+use Illuminate\View\View;
 
 
 class AbonentController extends Controller
@@ -21,7 +18,6 @@ class AbonentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
 
     public function __construct()
@@ -53,7 +49,7 @@ class AbonentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
     public function create()
     {
@@ -65,8 +61,8 @@ class AbonentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param AbonentFormRequest $request
+     * @return Response
      */
     public function store(AbonentFormRequest $request)
     {
@@ -103,7 +99,7 @@ class AbonentController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($slug)
     {
@@ -120,7 +116,7 @@ class AbonentController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(Request $request)
     {
@@ -133,9 +129,8 @@ class AbonentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function update(Request $request)
     {
@@ -176,7 +171,7 @@ class AbonentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy($id)
     {
