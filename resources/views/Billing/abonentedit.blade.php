@@ -161,6 +161,14 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="notes" class="col-lg-10 control-label">Примечание</label>
+                            <div class="col-lg-auto">
+                                <input type="text" class="form-control" id="notes" placeholder="Примечание"
+                                       name="notes">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <div class="col-lg-10 col-lg-offset-2">
                                 <a href="javascript:history.back()" class="btn btn-danger">Cancel</a>
                                 <button type="submit" class="btn btn-success">Submit</button>

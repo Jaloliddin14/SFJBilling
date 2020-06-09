@@ -159,6 +159,7 @@ class AbonentController extends Controller
         $ab->dogovor_nomer = $request->get('dogovor_nomer');
         $ab->phone = $request->get('phone');
         $ab->email = $request->get('email');
+        $ab->notes = $request->get('notes');
         $ab->save();
 
         $abonents = DataDB::abonents($slug);

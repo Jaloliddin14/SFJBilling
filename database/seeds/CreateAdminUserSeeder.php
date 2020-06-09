@@ -33,6 +33,7 @@ class CreateAdminUserSeeder extends Seeder
         DB::table('syssana')->insert([
             'id' => 1,
             'tekoy' => now()->modify('first day of this month'),
+            'crated_at' => now(),
         ]);
     }
 }
