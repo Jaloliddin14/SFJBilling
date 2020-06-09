@@ -45,29 +45,8 @@ class AbonentController extends Controller
             $request->get('email') == '') $query = $query->where('id', '<', '0');
 
         $abonents = $query->get();
-        //$user = User::query()->where('id','2')->get();
-        $user =User::query()->find(4);
-        //$roles = $user->hasAnyRole(Role::all());$user->getRoleNames;
-        //$roles = $user->hasAnyRole(Role::all());
 
-        //$roles = Role::findByName('Cashier');
-        //$roles->givePermissionTo('abonent-oplata');
-
-        //$roles2 = Role::findByName('Manager');
-        //$roles2->givePermissionTo('nastroyki');
-        //$roles2->givePermissionTo('new-abonent');
-        //$roles2->givePermissionTo('abonent-edit');
-        //$roles2->givePermissionTo('abonent-add_uslugi');
-        //$roles2->givePermissionTo('abonent-actions');
-
-
-        //$users = User::role('Cashier')->get();
-        $user->assignRole('Manager');
-        //ddd($user->can('otcheti'));
-       // ddd($user);
-        //ddd($roles);
-        //ddd($user->hasRole('Cashier'));
-        return view('Billing.abonentview', compact('abonents','user'));
+        return view('Billing.abonentview', compact('abonents'));
     }
 
 

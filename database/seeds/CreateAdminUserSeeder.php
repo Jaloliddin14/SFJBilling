@@ -15,7 +15,7 @@ class CreateAdminUserSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'name' => 'Jaloliddin Usmonov',
+            'name' => 'Administrator',
             'email' => 'admin@umail.uz',
             'password' => bcrypt('123456789')
         ]);
@@ -29,5 +29,10 @@ class CreateAdminUserSeeder extends Seeder
         $role->syncPermissions($permissions);
 
         $user->assignRole([$role->id]);
+
+        DB::table('syssana')->insert([
+            'id' => 1,
+            'tekoy' => now()->modify('first day of this month'),
+        ]);
     }
 }
