@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label for="monthly" class="col-lg-10 control-label">Периодичность услуги</label>
                             <div class="col-lg-auto">
-                                <select class="form-control" name="monthly" id="monthly">
+                                <select class="form-control" name="monthly" id="monthly" onchange="changes()">
                                     <option value="0">Одноразовая услуга</option>
                                     <option value="1">Ежемесячная услуга</option>
                                 </select>
@@ -99,3 +99,18 @@
     </div>
 
 @endsection
+
+@push('customjs')
+    <script type="text/javascript">
+        function changes() {
+            var vibor = document.getElementById("monthly").value;
+            if (vibor == 1) {
+                document.getElementById("cena_dinamic").value = 0;
+                document.getElementById("cena_dinamic").disabled = true;
+            } else {
+                document.getElementById("cena_dinamic").disabled = false;
+            }
+
+        }
+    </script>
+@endpush

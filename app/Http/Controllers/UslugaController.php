@@ -30,6 +30,7 @@ class UslugaController extends Controller
         $id = $request->get('ab_id');
         $abonents = Mabonent::whereId($id)->first();
         $tip_uslugi = DB::table('services')->where('is_active', '1')->get();
+        //ddd($tip_uslugi);
         return view('Billing.addusluga', compact('abonents', 'tip_uslugi'));
     }
 

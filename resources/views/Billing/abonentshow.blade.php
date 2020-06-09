@@ -32,7 +32,9 @@
                         <p><strong>Номер договора</strong>: {{ $abonents-> dogovor_nomer}} </p>
                     </div>
                     <div class="col-sm">
-                        <p><strong>Дата договора</strong>: {{ $abonents-> dogovor_sana}} </p>
+                        <p><strong>Дата
+                                договора</strong>: {{ Carbon\Carbon::parse($abonents-> dogovor_sana)->format('d.m.Y')}}
+                        </p>
                     </div>
                 </div>
                 <div class="row">
@@ -47,14 +49,19 @@
                 </div>
                 <div class="row">
                     <div class="col-sm">
-                        <p><strong>Дата рождение</strong>: {{ $abonents-> pass_sana_birth}} </p>
-                    </div>
-
-                    <div class="col-sm">
-                        <p><strong>Дата получение</strong>: {{ $abonents-> pass_sana_get}} </p>
+                        <p><strong>Дата
+                                рождение</strong>: {{ Carbon\Carbon::parse($abonents-> pass_sana_birth)->format('d.m.Y')}}
+                        </p>
                     </div>
                     <div class="col-sm">
-                        <p><strong>Дата истичение</strong>: {{ $abonents-> pass_sana_exp}} </p>
+                        <p><strong>Дата
+                                получение</strong>: {{ Carbon\Carbon::parse($abonents-> pass_sana_get)->format('d.m.Y')}}
+                        </p>
+                    </div>
+                    <div class="col-sm">
+                        <p><strong>Дата
+                                истичение</strong>: {{ Carbon\Carbon::parse($abonents-> pass_sana_exp)->format('d.m.Y')}}
+                        </p>
                     </div>
                     <div class="col-sm">
                         <p><strong>Status</strong>: {{ $abonents->is_active ? 'Active' : 'Closed' }}</p>
@@ -76,6 +83,13 @@
                                 на конец : {{ $payment->saldo_end}}</strong></p>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm">
+                        <p><strong>Применчание :</strong> {{ $abonents-> notes}} </p>
+                    </div>
+                </div>
+
                 <div class="row">
                     @can('abonent-add_uslugi')
                         <div class="col-sm-2 ">

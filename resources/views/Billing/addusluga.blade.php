@@ -36,10 +36,10 @@
                         <div class="form-group">
                             <label for="pul_tip" class="col-lg-10 control-label">Услуга</label>
                             <div class="col-lg-auto">
-                                <select class="form-control" name="item_id" id="item_id">
+                                <select class="form-control" name="item_id" id="item_id"
+                                        onchange="changes({{$tip_uslugi}})">
                                     @foreach($tip_uslugi as $item)
-                                        <option value="{{$item->id}}" data-disable="#cena">
-                                            {{$item->service_name}}</option>
+                                        <option value="{{$item->id}}" > {{$item->service_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -92,5 +92,21 @@
     </div>
 @endsection
 
+@push('customjs')
+    <script type="text/javascript">
+        function changes(cenaDynamicArray) {
+            console.log(cenaDynamicArray[document.getElementById("item_id").value-1].cena_dinamic);
+            cenaDynamic = (cenaDynamicArray[document.getElementById("item_id").value-1].cena_dinamic);
+            if (cenaDynamic == 1) {
+                document.getElementById("cena").value = 0;
+                document.getElementById("cena").disabled = true;
+            } else {
+                document.getElementById("cena").value = 0;
+                document.getElementById("cena").disabled = false;
+            }
+
+        }
+    </script>
+@endpush
 
 

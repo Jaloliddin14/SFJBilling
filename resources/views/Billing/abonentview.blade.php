@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="email">Электронная почта</label>
-                                <input type="text" class="form-control" id="email" name="email">
+                                <input type="text" class="form-control" id="email" name="email" >
                             </div>
                         </div>
                         <button {{action('AbonentController@index')}} class="btn btn-success btn-lg btn-block"
@@ -76,14 +76,22 @@
                         @endif
                         </tbody>
                     </table>
-
                 </div>
             </div>
-
         </div>
-
     </div>
-
-
-
 @endsection
+
+
+    @push('customjs')
+        <script type="text/javascript">
+            function book()
+            {
+                document.getElementById("phone").disabled = true;
+            }
+        </script>
+    @endpush
+
+
+
+

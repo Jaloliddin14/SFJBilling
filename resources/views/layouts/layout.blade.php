@@ -30,6 +30,8 @@
     </main>
 </div>
 
+@yield('scripts')
+@stack('customjs')
 
 </body>
 </html>

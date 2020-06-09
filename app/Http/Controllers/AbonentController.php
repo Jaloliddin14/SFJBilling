@@ -111,7 +111,8 @@ class AbonentController extends Controller
             'is_active' => 1,
             'phone' => $request->get('phone'),
             'email' => $request->get('email'),
-            'slug' => $slug
+            'slug' => $slug,
+            'notes' => $request->get('notes'),
         ));
 
         $mabonent->save();

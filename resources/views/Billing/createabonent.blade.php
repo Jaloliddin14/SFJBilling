@@ -126,22 +126,24 @@
                                            name="pass_nomer">
                                 </div>
                             </div>
-
-                            <div class="form-group col-md-2">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
                                 <label for="pass_sana_birth" class="col-lg-10 control-label">Дата рождения</label>
                                 <div class="col-lg-auto">
                                     <input type="date" class="form-control" id="pass_sana_birth" name="pass_sana_birth">
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-2">
-                                <label for="pass_sana_get" class="col-lg-10 control-label">Дата выдачи</label>
+                            <div class="form-group col-md-4">
+                                <label for="pass_sana_get" class="col-lg-10 control-label">Дата выдачи паспорта
+                                </label>
                                 <div class="col-lg-auto">
                                     <input type="date" class="form-control" id="pass_sana_get" name="pass_sana_get">
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-4">
                                 <label for="pass_sana_exp" class="col-lg-10 control-label">Срок истечение</label>
                                 <div class="col-lg-auto">
                                     <input type="date" class="form-control" id="pass_sana_exp" name="pass_sana_exp">
@@ -153,6 +155,14 @@
                             <div class="col-lg-auto">
                                 <input type="text" class="form-control" id="pass_iib" placeholder="Кем выдан паспорт"
                                        name="pass_iib">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes" class="col-lg-10 control-label">Примечание</label>
+                            <div class="col-lg-auto">
+                                <input type="text" class="form-control" id="notes" placeholder="Примечание"
+                                       name="notes">
                             </div>
                         </div>
 

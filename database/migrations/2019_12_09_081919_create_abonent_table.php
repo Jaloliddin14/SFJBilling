@@ -34,6 +34,7 @@ class CreateAbonentTable extends Migration
             $table->string('phone');
             $table->string('email')->nullable();
             $table->string('slug')->nullable();
+            $table->string('notes')->nullable();
             $table->timestamps();
             $table->foreign('add_street_id')->references('id')->on('street');
         });

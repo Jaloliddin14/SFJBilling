@@ -301,7 +301,7 @@ class SettingsController extends Controller
                 'password' => Hash::make($request->get('password')),
             )
         );
-        $useradd -> save();
+        $useradd->save();
 
         $usrs = Users::all();
         return view('Billing.editsettings.userregister', compact('usrs'));
@@ -350,19 +350,31 @@ class SettingsController extends Controller
     public function editusersrole($id)
     {
         $usrs = Users::where('id', $id)->first();
-        $user =User::query()->find($id);
+        $user = User::query()->find($id);
         $roles = $user->getRoleNames();
         //ddd($roles);
-        return view('Billing.editsettings.userrole', compact('usrs','roles'));
+        return view('Billing.editsettings.userrole', compact('usrs', 'roles'));
     }
 
     public function updateusersrole(Request $request)
     {
         //ddd($request);
-        $user =User::query()->find($request->id);
-        if ($request->has('admin')){$user->assignRole('Admin');} else{$user->removeRole('Admin');}
-        if ($request->has('manager')){$user->assignRole('Manager');} else{$user->removeRole('Manager');}
-        if ($request->has('cashier')){$user->assignRole('Cashier');} else{$user->removeRole('Cashier');}
+        $user = User::query()->find($request->id);
+        if ($request->has('admin')) {
+            $user->assignRole('Admin');
+        } else {
+            $user->removeRole('Admin');
+        }
+        if ($request->has('manager')) {
+            $user->assignRole('Manager');
+        } else {
+            $user->removeRole('Manager');
+        }
+        if ($request->has('cashier')) {
+            $user->assignRole('Cashier');
+        } else {
+            $user->removeRole('Cashier');
+        }
         $usrs = Users::all();
         return view('Billing.editsettings.userregister', compact('usrs'));
 
