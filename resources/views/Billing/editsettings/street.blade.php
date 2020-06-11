@@ -4,7 +4,7 @@
     <div class="container col-md-8 col-md-offset-2">
         <div class="card mt-5">
             <div class="card-header ">
-                <h5 class="float-left">Добавить тип адреса</h5>
+                <h5 class="float-left">Добавить адрес</h5>
                 <div class="clearfix"></div>
             </div>
             <div class="card-body mt-2">
@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="tip_street_name" class="col-lg-10 control-label">Адрес</label>
+                            <label for="tip_street_name" class="col-lg-10 control-label">Тип адреса</label>
                             <div class="col-lg-auto">
                                 <select class="form-control" name="tip_street_item_id" id="tip_street_name">
                                     @foreach($street_tip as $item)

@@ -41,8 +41,13 @@ class SettingsController extends Controller
 
     public function addstreettip(Request $request)
     {
-        //ddd($request);
-        $streettip = new StreetTip(array(
+        $this->validate($request, [
+            'tip_street_name' => 'required',
+        ], [
+            'tip_street_name.required' => 'Поле Тип адреса обязательно для заполнения',
+        ]);
+
+            $streettip = new StreetTip(array(
                 'street_tip_name' => $request->get('tip_street_name'),
                 'is_active' => 1
             )
@@ -60,7 +65,12 @@ class SettingsController extends Controller
 
     public function updatestreettip(Request $request)
     {
-        //ddd($request);
+        $this->validate($request, [
+            'tip_street_name' => 'required',
+        ], [
+            'tip_street_name.required' => 'Поле Тип адреса обязательно для заполнения',
+        ]);
+
         $idd = $request->get('id');
         $streettipupdate = StreetTip::where('id', $idd)->first();
         //ddd($streettip);
@@ -92,6 +102,14 @@ class SettingsController extends Controller
 
     public function addstreet(Request $request)
     {
+        $this->validate($request, [
+            'street_name' => 'required',
+            'tip_street_item_id' => 'required',
+        ], [
+            'street_name.required' => 'Поле Адрес обязательно для заполнения',
+            'tip_street_item_id.required' => 'Поле Тип адреса обязательно для заполнения',
+        ]);
+
         $streetadd = new Streets(array(
                 'street_name' => $request->get('street_name'),
                 'street_tip_id' => $request->get('tip_street_item_id'),
@@ -118,6 +136,14 @@ class SettingsController extends Controller
 
     public function updatestreet(Request $request)
     {
+        $this->validate($request, [
+            'street_name' => 'required',
+            'tip_street_item_id' => 'required',
+        ], [
+            'street_name.required' => 'Поле Адрес обязательно для заполнения',
+            'tip_street_item_id.required' => 'Поле Тип адреса обязательно для заполнения',
+        ]);
+
         $idd = $request->get('id');
         $streetupdate = Streets::where('id', $idd)->first();
 
@@ -151,6 +177,12 @@ class SettingsController extends Controller
 
     public function addoplatatip(Request $request)
     {
+        $this->validate($request, [
+            'tip_oplati' => 'required',
+        ], [
+            'tip_oplati.required' => 'Поле Тип Оплаты обязательно для заполнения',
+        ]);
+
         $oplatatipadd = new TipOplat(array(
                 'oplata_tip_name' => $request->get('tip_oplati'),
                 'is_active' => 1
@@ -169,6 +201,11 @@ class SettingsController extends Controller
 
     public function updateoplatatip(Request $request)
     {
+        $this->validate($request, [
+            'tip_oplati' => 'required',
+        ], [
+            'tip_oplati.required' => 'Поле Тип Оплаты обязательно для заполнения',
+        ]);
 
         $idd = $request->get('id');
         $oplatatipupdate = TipOplat::where('id', $idd)->first();
@@ -196,6 +233,16 @@ class SettingsController extends Controller
 
     public function addservice(Request $request)
     {
+        $this->validate($request, [
+            'service_name' => 'required',
+            'monthly' => 'required',
+            'cena_dinamic' => 'required',
+        ], [
+            'service_name.required' => 'Поле Наименование услуги обязательно для заполнения',
+            'monthly.required' => 'Поле Периодичность услуги обязательно для заполнения',
+            'cena_dinamic.required' => 'Поле Стоимость обязательно для заполнения',
+        ]);
+
         $serviceadd = new Services(array(
                 'service_name' => $request->get('service_name'),
                 'is_active' => 1,
@@ -216,6 +263,15 @@ class SettingsController extends Controller
 
     public function updateservice(Request $request)
     {
+        $this->validate($request, [
+            'service_name' => 'required',
+            'monthly' => 'required',
+            'cena_dinamic' => 'required',
+        ], [
+            'service_name.required' => 'Поле Наименование услуги обязательно для заполнения',
+            'monthly.required' => 'Поле Периодичность услуги обязательно для заполнения',
+            'cena_dinamic.required' => 'Поле Стоимость обязательно для заполнения',
+        ]);
 
         $idd = $request->get('id');
         $service = Services::where('id', $idd)->first();
@@ -294,6 +350,15 @@ class SettingsController extends Controller
 
     public function addusers(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ], [
+            'name.required' => 'Поле Фамилия Имя Отчество услуги обязательно для заполнения',
+            'email.required' => 'Поле Электронная почта услуги обязательно для заполнения',
+            'password.required' => 'Поле Пароль обязательно для заполнения',
+        ]);
         $useradd = new Users(array(
                 'name' => $request->get('name'),
                 'email' => $request->get('email'),
@@ -315,35 +380,29 @@ class SettingsController extends Controller
 
     public function updateusers(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ], [
+            'name.required' => 'Поле Фамилия Имя Отчество услуги обязательно для заполнения',
+            'email.required' => 'Поле Электронная почта услуги обязательно для заполнения',
+            'password.required' => 'Поле Пароль обязательно для заполнения',
+        ]);
+
         $idd = $request->get('id');
 
         $users = Users::where('id', $idd)->first();
         $users->name = $request->get('name');
         $users->email = $request->get('email');
         $users->password = Hash::make($request->get('password'));
-
-//        if ($request->get('isactive') != null) {
-//            $service->is_active = 1;
-//        } else {
-//            $service->is_active = 0;
-//        }
-
         $users->save();
 
         $usrs = Users::all();
         return view('Billing.editsettings.userregister', compact('usrs'));
     }
 
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
+     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////// Роли пользователя /////////////////////////////////////
 

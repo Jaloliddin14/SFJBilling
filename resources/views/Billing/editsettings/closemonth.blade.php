@@ -23,13 +23,13 @@
                     <fieldset>
                         <div class="row">
                             <div class="col-sm">
-                                <p><strong>Текущий месяц</strong>: {{ $close-> tekoy}} </p>
+                                <p><strong>Текущий месяц</strong>: {{Carbon\Carbon::parse($close-> tekoy)->format('d.m.Y')}} </p>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm">
-                                <p><strong>Новый месяц</strong>: {{ $close-> tekoy}} </p>
+                                <p><strong>Новый месяц</strong>: {{ Carbon\Carbon::parse($close-> tekoy)->addMonth(1)->format('d.m.Y')}} </p>
                             </div>
                         </div>
 

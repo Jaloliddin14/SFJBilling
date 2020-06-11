@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Streets;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\AbonentFormRequest;
@@ -62,10 +64,36 @@ class AbonentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param AbonentFormRequest $request
-     * @return Response
+     * @return RedirectResponse|Redirector
      */
     public function store(AbonentFormRequest $request)
     {
+        $this->validate($request, [
+            'pass_fio' => 'required',
+            'add_street_id' => 'required',
+            'add_dom' => 'required',
+            'add_korpus' => 'required',
+            'add_podyezd' => 'required',
+            'add_kvartira' => 'required',
+            'dogovor_sana' => 'required',
+            'dogovor_nomer' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'notes' => 'required',
+        ], [
+            'pass_fio.required' => 'Поле Фамилия Имя Отчество обязательно для заполнения',
+            'add_street_id.required' => 'Поле Улица обязательно для заполнения',
+            'add_dom.required' => 'Поле Дом обязательно для заполнения',
+            'add_korpus.required' => 'Поле Корпус обязательно для заполнения',
+            'add_podyezd.required' => 'Поле Подъезд обязательно для заполнения',
+            'add_kvartira.required' => 'Поле Квартира обязательно для заполнения',
+            'dogovor_sana.required' => 'Поле Дата договора обязательно для заполнения',
+            'dogovor_nomer.required' => 'Поле Номер договора обязательно для заполнения',
+            'phone.required' => 'Поле Телефон обязательно для заполнения',
+            'email.required' => 'Поле Электронная почта обязательно для заполнения',
+            'notes.required' => 'Поле  обязательно для заполнения',
+        ]);
+
         $slug = uniqid();
         $mabonent = new Mabonent(array(
             'pass_fio' => $request->get('pass_fio'),
@@ -98,8 +126,8 @@ class AbonentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return Response
+     * @param $slug
+     * @return Factory|View
      */
     public function show($slug)
     {
@@ -109,14 +137,14 @@ class AbonentController extends Controller
         $payment = DataDB::payment($abonents->id);
         $payments = DataDB::payments($abonents->id);
 
-        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi','payment','payments'));
+        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi', 'payment', 'payments'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return Response
+     * @param Request $request
+     * @return Factory|View
      */
     public function edit(Request $request)
     {
@@ -130,7 +158,7 @@ class AbonentController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return Factory|View
      */
     public function update(Request $request)
     {
@@ -163,7 +191,7 @@ class AbonentController extends Controller
         $payment = DataDB::payment($abonents->id);
         $payments = DataDB::payments($abonents->id);
 
-        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi','payment','payments'));
+        return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi', 'payment', 'payments'));
 
     }
 
@@ -198,4 +226,4 @@ class AbonentController extends Controller
     }
 
 
-    }
+}
