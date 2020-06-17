@@ -164,7 +164,7 @@
                             <label for="notes" class="col-lg-10 control-label">Примечание</label>
                             <div class="col-lg-auto">
                                 <input type="text" class="form-control" id="notes" placeholder="Примечание"
-                                       name="notes">
+                                       name="notes" value="{{$abonents->notes}}">
                             </div>
                         </div>
 

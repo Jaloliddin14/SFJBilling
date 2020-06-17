@@ -109,6 +109,7 @@
                 document.getElementById("cena_dinamic").disabled = true;
             } else {
                 document.getElementById("cena_dinamic").disabled = false;
+                document.getElementById("cena_dinamic").value = 0;
             }
 
         }

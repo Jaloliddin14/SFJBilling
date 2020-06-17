@@ -25,15 +25,22 @@ class CreateAdminUserSeeder extends Seeder
         $role3 = Role::create(['name' => 'Cashier']);
 
         $permissions = Permission::pluck('id','id')->all();
-
         $role->syncPermissions($permissions);
-
         $user->assignRole([$role->id]);
+
+        $role2->givePermissionTo('nastroyki');
+        $role2->givePermissionTo('new-abonent');
+        $role2->givePermissionTo('abonent-edit');
+        $role2->givePermissionTo('abonent-add_uslugi');
+        $role2->givePermissionTo('abonent-actions');
+        $role2->givePermissionTo('otcheti');
+
+        $role3->givePermissionTo('abonent-oplata');
 
         DB::table('syssana')->insert([
             'id' => 1,
             'tekoy' => now()->modify('first day of this month'),
-            'crated_at' => now(),
+            'created_at' => now(),
         ]);
     }
 }

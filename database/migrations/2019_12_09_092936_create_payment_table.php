@@ -16,11 +16,11 @@ class CreatePaymentTable extends Migration
         Schema::create('payment', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('abonent_id')->unsigned();
-            $table->decimal('saldo_begin',15,2);
-            $table->decimal('service_nach',15,2);
-            $table->decimal('oplata',15,2);
-            $table->decimal('pererschet',15,2);
-            $table->decimal('saldo_end',15,2);
+            $table->decimal('saldo_begin',15,2)->default(0);
+            $table->decimal('service_nach',15,2)->default(0);
+            $table->decimal('oplata',15,2)->default(0);
+            $table->decimal('pererschet',15,2)->default(0);
+            $table->decimal('saldo_end',15,2)->default(0);
             $table->date('period');
             $table->foreign('abonent_id')->references('id')->on('abonent');
             $table->timestamps();

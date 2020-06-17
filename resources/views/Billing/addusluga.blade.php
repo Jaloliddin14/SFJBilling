@@ -99,10 +99,10 @@
             cenaDynamic = (cenaDynamicArray[document.getElementById("item_id").value-1].cena_dinamic);
             if (cenaDynamic == 1) {
                 document.getElementById("cena").value = 0;
-                document.getElementById("cena").disabled = true;
+                document.getElementById("cena").disabled = false;
             } else {
                 document.getElementById("cena").value = 0;
-                document.getElementById("cena").disabled = false;
+                document.getElementById("cena").disabled = true;
             }
 
         }

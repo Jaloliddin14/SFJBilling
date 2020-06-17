@@ -13,6 +13,8 @@ use App\Http\Requests\AbonentFormRequest;
 use App\Helpers\DataDB;
 use App\Mabonent;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 
 class AbonentController extends Controller
@@ -43,7 +45,6 @@ class AbonentController extends Controller
             $request->get('email') == '') $query = $query->where('id', '<', '0');
 
         $abonents = $query->get();
-
         return view('Billing.abonentview', compact('abonents'));
     }
 

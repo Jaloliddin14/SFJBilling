@@ -32,19 +32,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="monthly" class="col-lg-10 control-label">Адрес</label>
-                            <div class="col-lg-auto">
-                                <select class="form-control" name="monthly" id="monthly">
-                                    <option value="0" {{ $services->monthly==0 ? 'selected' : '' }}
-                                    >Одноразовая услуга</option>
-                                    <option value="1" {{ $services->monthly==1 ? 'selected' : '' }}
-                                    >Ежемесячная услуга</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
                             <label for="isactive" class="col-lg-10 control-label">Активный</label>
                             <div class="col-lg-auto">
                                 <input type="checkbox" class="form-control" id="isactive"

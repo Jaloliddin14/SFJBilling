@@ -92,16 +92,16 @@
 
                 <div class="row">
                     @can('abonent-add_uslugi')
-                        <div class="col-sm-2 ">
+                        <div class="col ">
                             <form method="post" action="/addusluga">
                                 <input type="hidden" name="ab_id" value="{{$abonents->id}}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="submit" class="btn btn-primary btn-block" value="Установка услуги">
+                                <input type="submit" class="btn btn-primary btn-block " value="Установка услуги">
                             </form>
                         </div>
                     @endcan
                     @can('abonent-oplata')
-                        <div class="col-sm-2">
+                        <div class="col ">
                             <form method="post" action="/addoplata">
                                 <input type="hidden" name="ab_id" value="{{$abonents->id}}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -110,7 +110,7 @@
                         </div>
                     @endcan
                     @can('abonent-edit')
-                        <div class="col-sm-2">
+                        <div class="col">
                             <form method="post" action="/editabonent">
                                 <input type="hidden" name="ab_id" value="{{$abonents->id}}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -118,6 +118,16 @@
                             </form>
                         </div>
                     @endcan
+                    @can('abonent-edit')
+                        <div class="col">
+                            <form method="post" action="/editabonent">
+                                <input type="hidden" name="ab_id" value="{{$abonents->id}}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="submit" class="btn btn-primary btn-block" value="Архив">
+                            </form>
+                        </div>
+                    @endcan
+
                 </div>
             </div>
         </div>

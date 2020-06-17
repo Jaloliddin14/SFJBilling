@@ -223,7 +223,7 @@ class SettingsController extends Controller
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /////////////////////////////////////////////////// Услуга ////////////////////////////////////////////
+    /////////////////////////////////////////////////// Услуга ///////////////////////////////////////////
 
     public function servicecreateindex()
     {
@@ -236,18 +236,20 @@ class SettingsController extends Controller
         $this->validate($request, [
             'service_name' => 'required',
             'monthly' => 'required',
-            'cena_dinamic' => 'required',
         ], [
             'service_name.required' => 'Поле Наименование услуги обязательно для заполнения',
             'monthly.required' => 'Поле Периодичность услуги обязательно для заполнения',
-            'cena_dinamic.required' => 'Поле Стоимость обязательно для заполнения',
         ]);
-
+        if ($request->has('cena_dinamic')) {
+            $cena_dinamic = $request->get('cena_dinamic');
+        }else{
+            $cena_dinamic = 0;
+        }
         $serviceadd = new Services(array(
                 'service_name' => $request->get('service_name'),
                 'is_active' => 1,
                 'monthly' => $request->get('monthly'),
-                'cena_dinamic' => $request->get('cena_dinamic'),
+                'cena_dinamic' => $cena_dinamic,
             )
         );
         $serviceadd->save();
@@ -265,19 +267,14 @@ class SettingsController extends Controller
     {
         $this->validate($request, [
             'service_name' => 'required',
-            'monthly' => 'required',
-            'cena_dinamic' => 'required',
         ], [
             'service_name.required' => 'Поле Наименование услуги обязательно для заполнения',
-            'monthly.required' => 'Поле Периодичность услуги обязательно для заполнения',
-            'cena_dinamic.required' => 'Поле Стоимость обязательно для заполнения',
         ]);
 
         $idd = $request->get('id');
         $service = Services::where('id', $idd)->first();
 
         $service->service_name = $request->get('service_name');
-        $service->monthly = $request->get('monthly');
         if ($request->get('isactive') != null) {
             $service->is_active = 1;
         } else {

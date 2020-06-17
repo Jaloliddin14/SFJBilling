@@ -39,19 +39,7 @@ $tekoy = ConfController::getekoy();
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="/createstreettip">Тип адреса</a>
                             <a class="dropdown-item" href="/createstreet">Улицы</a>
-                            @can('nastroyki-uslugi')
-                                <a class="dropdown-item" href="/createservice">Услуги</a>
-                            @endcan
-                            @can('nastroyki-cena_uslugi')
-                                <a class="dropdown-item" href="/createservicecena">Цена услуги</a>
-                            @endcan
                             <a class="dropdown-item" href="/createoplatatip">Тип оплаты</a>
-                            @can('nastroyki-users')
-                                <a class="dropdown-item" href="/createusers">Пользователи</a>
-                            @endcan
-                            @can('nastroyki-close_month')
-                                <a class="dropdown-item" href="/closemonthpage">Закрытие месяца</a>
-                            @endcan
                         </div>
                     </li>
                 @endcan
@@ -74,6 +62,31 @@ $tekoy = ConfController::getekoy();
                     </div>
                 </li>
 
+                @role('Admin')
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Администратор
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @can('nastroyki-uslugi')
+                            <a class="dropdown-item" href="/createservice">Услуги</a>
+                        @endcan
+                        @can('nastroyki-cena_uslugi')
+                            <a class="dropdown-item" href="/createservicecena">Цена услуги</a>
+                        @endcan
+                        @can('nastroyki-users')
+                            <a class="dropdown-item" href="/createusers">Пользователи</a>
+                        @endcan
+                        @can('nastroyki-close_month')
+                            <a class="dropdown-item" href="/closemonthpage">Закрытие месяца</a>
+                        @endcan
+                    </div>
+                </li>
+                @else
+
+                @endrole
 
 
             </ul>
