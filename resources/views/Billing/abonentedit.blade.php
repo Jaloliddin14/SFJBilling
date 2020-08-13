@@ -69,7 +69,6 @@
                         <div class="form-group">
                             <label for="add_street_id" class="col-lg-10 control-label">Улица</label>
                             <div class="col-lg-auto">
-
                                 <select class="form-control" name="add_street_id" id="add_street_id">
                                     @foreach($street as $item)
                                         <option value="{{$item->id}}"
@@ -127,8 +126,9 @@
                                            value="{{$abonents->pass_nomer}}">
                                 </div>
                             </div>
-
-                            <div class="form-group col-md-2">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
                                 <label for="pass_sana_birth" class="col-lg-10 control-label">Дата рождения</label>
                                 <div class="col-lg-auto">
                                     <input type="date" class="form-control" id="pass_sana_birth" name="pass_sana_birth"
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-4">
                                 <label for="pass_sana_get" class="col-lg-10 control-label">Дата выдачи</label>
                                 <div class="col-lg-auto">
                                     <input type="date" class="form-control" id="pass_sana_get" name="pass_sana_get"
@@ -144,7 +144,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-4">
                                 <label for="pass_sana_exp" class="col-lg-10 control-label">Срок истечение</label>
                                 <div class="col-lg-auto">
                                     <input type="date" class="form-control" id="pass_sana_exp" name="pass_sana_exp"
@@ -152,6 +152,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
                         <div class="form-group">
                             <label for="pass_iib" class="col-lg-10 control-label">Кем выдан</label>
                             <div class="col-lg-auto">

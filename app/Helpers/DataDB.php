@@ -20,6 +20,14 @@ class DataDB
         where('slug', $slug)->first();
     }
 
+    public static function abonentarxiv($slug)
+    {
+        return DB::table('arxiv_abonent')->join('street', 'add_street_id', 'street.id')->
+        select('arxiv_abonent.*', 'street.street_name')->
+        where('slug', $slug)->get();
+    }
+
+
     public static function oplati($abonent_id)
     {
         return DB::table('oplati')->join('oplata_tip', 'oplata_id', 'oplata_tip.id')->

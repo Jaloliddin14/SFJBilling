@@ -23,6 +23,7 @@ Route::post('/','AbonentController@index');
 Route::get('/abonentsearch/{slug?}', 'AbonentController@show');
 Route::post('/editabonent','AbonentController@edit');
 Route::post('/updateabonent','AbonentController@update');
+Route::post('/arxivabonent', 'AbonentController@showarxiv');
 
 
 

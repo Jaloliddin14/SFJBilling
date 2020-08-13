@@ -141,6 +141,14 @@ class AbonentController extends Controller
         return view('Billing.abonentshow', compact('abonents', 'oplati', 'uslugi', 'payment', 'payments'));
     }
 
+    public function showarxiv(Request $request)
+    {
+        $slug = $request->get('slug');
+        $abonent = DataDB::abonentarxiv($slug);
+        //ddd($abonent);
+        return view('Billing.arxivabonent', compact('abonent'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
